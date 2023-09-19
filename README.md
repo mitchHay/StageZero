@@ -11,6 +11,28 @@ StageZero puts flexibility and developer experience first. Want to change to a d
 
 ## Usage
 
+### Registering a DriverBuilder
+
+Before writing any tests, first you have to register a `IDriverBuilder` instance globally (this only has to be done once!). For example, if you're wanting to use our `Selenium` implementation with `NUnit` you can do:
+
+```csharp
+[SetUpFixture]
+public class GlobalSetup
+{
+    [OneTimeSetUp]
+    public class BeforeEverything()
+    {
+        DriverBuilder.Register<WebDriverBuilder>();
+    }
+}
+```
+
+Boom. That's it, you can start writing your tests! 
+
+### Writing a test
+
+`StageZero` handles all of the underlying logic required to create, navigate, interact with elements, and terminate drivers. All you have to do is write your test, no more managing frameworks! Following on from the example provided above, you can write a test for the web like:
+
 ```csharp
 public class Test
 {
@@ -19,7 +41,21 @@ public class Test
     [SetUp]
     public void BeforeEach()
     {
-        _driver = DriverBuilder.Initialise(new DriverOptions());
+        _driver = DriverBuilder.Create(new WebDriverOptions());
+    }
+
+    [Test]
+    public Task NavigateToGoogle()
+    {
+        await _driver.GoTo("https://google.com");
+    }
+
+    [TearDown]
+    public Task AfterEach()
+    {
+        await _driver.Terminate();
     }
 }
 ```
+
+If you ever want to change to a different underlying driver (e.g. Playwright), all you have to do is swap out the registered builder for your desired UI testing frameworks implementation. All of your existing test logic 110% **will** work with the updated builder.
