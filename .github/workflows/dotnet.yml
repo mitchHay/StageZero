@@ -26,4 +26,4 @@ jobs:
     - name: Build
       run: dotnet build ./src/StageZero.sln --no-restore
     - name: Test
-      run: SE_BROWSER_PATH=$(which chrome) dotnet test ./src/StageZero.sln --no-restore
+      run: dotnet test ./src/StageZero.sln --no-restore
