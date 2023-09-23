@@ -3,6 +3,9 @@
 
 CHROME_PATH=$(which chrome)
 WRAPPER_PATH=$(readlink -f $CHROME_PATH)
+
+echo $WRAPPER_PATH
+
 BASE_PATH="$WRAPPER_PATH-base"
 mv "$WRAPPER_PATH" "$BASE_PATH"
 
