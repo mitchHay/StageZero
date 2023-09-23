@@ -11,7 +11,10 @@ public class Tests
     [SetUp]
     public void BeforeEach()
     {
-        _driver = DriverBuilder.Create(new WebDriverOptions());
+        _driver = DriverBuilder.Create(new WebDriverOptions
+        {
+            Headless = true
+        });
     }
 
     [TestCase(UrlToNavigate)]

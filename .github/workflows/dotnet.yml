@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@v1
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -21,3 +23,5 @@ jobs:
       run: dotnet restore ./src/StageZero.sln
     - name: Build
       run: dotnet build ./src/StageZero.sln --no-restore
+    - name: Test
+      run: dotnet test ./src/StageZero.sln --no-restore

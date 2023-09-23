@@ -23,14 +23,31 @@ public class WebDriver : IDriverWeb
 
     public WebDriver(WebDriverOptions options)
     {
+        // TODO: Extract into some kind of factory
         switch(options.Browser)
         {
             case Browser.Chrome:
+                var chromeOptions = new ChromeOptions();
                 var chromeService = ChromeDriverService.CreateDefaultService();
+
+                if (options.Headless)
+                {
+                    // Use the new headless mode
+                    // Ref: https://developer.chrome.com/articles/new-headless/
+                    chromeOptions.AddArgument("--headless=new");
+                }
+
                 _seleniumDriver = new ChromeDriver(chromeService);
                 break;
             case Browser.Firefox:
+                var firefoxOptions = new FirefoxOptions();
                 var firefoxService = FirefoxDriverService.CreateDefaultService();
+
+                if (options.Headless)
+                {
+                    firefoxOptions.AddArgument("-headless");
+                }
+
                 _seleniumDriver = new FirefoxDriver(firefoxService);
                 break;
         }
