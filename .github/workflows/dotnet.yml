@@ -15,8 +15,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@v1
-    - name: Wrap Chrome
-      run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:

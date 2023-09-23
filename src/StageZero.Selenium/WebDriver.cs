@@ -36,6 +36,7 @@ public class WebDriver : IDriverWeb
                         // Use the new headless mode
                         // Ref: https://developer.chrome.com/articles/new-headless/
                         "--headless=new",
+                        "--no-sandbox",
                         "--disable-dev-shm-usage"
                     );
                 }
