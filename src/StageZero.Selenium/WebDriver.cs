@@ -32,9 +32,12 @@ public class WebDriver : IDriverWeb
 
                 if (options.Headless)
                 {
-                    // Use the new headless mode
-                    // Ref: https://developer.chrome.com/articles/new-headless/
-                    chromeOptions.AddArgument("--headless=new");
+                    chromeOptions.AddArguments(
+                        // Use the new headless mode
+                        // Ref: https://developer.chrome.com/articles/new-headless/
+                        "--headless=new",
+                        "--disable-dev-shm-usage"
+                    );
                 }
 
                 _seleniumDriver = new ChromeDriver(chromeService);
