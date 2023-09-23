@@ -35,8 +35,8 @@ public class WebDriver : IDriverWeb
                     chromeOptions.AddArguments(
                         // Use the new headless mode
                         // Ref: https://developer.chrome.com/articles/new-headless/
-                        "--headless=new",
-                        "--no-sandbox",
+                        "--headless",
+                        "--disable-gpu",
                         "--disable-dev-shm-usage"
                     );
                 }
