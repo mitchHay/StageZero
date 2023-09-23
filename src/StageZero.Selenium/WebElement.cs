@@ -19,11 +19,13 @@ public class WebElement : IElementWeb
         _actions = new Actions(_driver);
     }
 
+    /// <inheritdoc/>
     public Task Click()
     {
         return Task.Run(() => _element.Click());
     }
 
+    /// <inheritdoc/>
     public Task ClickAndHold(TimeSpan duration)
     {
         return Task.Run(() =>
@@ -33,6 +35,7 @@ public class WebElement : IElementWeb
         });
     }
 
+    /// <inheritdoc/>
     public Task DoubleClick()
     {
         return Task.Run(() =>
@@ -42,6 +45,7 @@ public class WebElement : IElementWeb
         });
     }
 
+    /// <inheritdoc/>
     public Task RightClick()
     {
         return Task.Run(() =>
@@ -51,11 +55,13 @@ public class WebElement : IElementWeb
         });
     }
 
+    /// <inheritdoc/>
     public Task Type(string text)
     {
         return Task.Run(() => _element.SendKeys(text));
     }
 
+    /// <inheritdoc/>
     public Task PressKeys(Web.Keys keys)
     {
         return Task.Run(async () => 
