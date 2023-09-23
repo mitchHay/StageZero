@@ -12,6 +12,12 @@ public class WebElement : IElementWeb
     private readonly IWebElement _element;
     private readonly Actions _actions;
 
+    public string ClassName => _element.GetAttribute("class");
+
+    public string Id => _element.GetAttribute("id");
+
+    public string Tag => _element.TagName;
+
     public WebElement(IWebDriver driver, IWebElement element)
     {
         _driver = driver;

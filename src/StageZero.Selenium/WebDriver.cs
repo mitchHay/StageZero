@@ -12,7 +12,7 @@ namespace StageZero.Selenium;
 public class WebDriver : IDriverWeb
 {
     /// <inheritdoc/>
-    public string Title => string.Empty;
+    public string Title => _seleniumDriver.Title;
 
     /// <inheritdoc/>
     public string Url => _seleniumDriver.Url;

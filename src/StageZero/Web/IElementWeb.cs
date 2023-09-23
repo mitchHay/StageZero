@@ -6,6 +6,21 @@ namespace StageZero.Web;
 public interface IElementWeb : IElement
 {
     /// <summary>
+    /// The elements class name
+    /// </summary>
+    public string ClassName { get; }
+
+    /// <summary>
+    /// The elements id
+    /// </summary>
+    public string Id { get; }
+
+    /// <summary>
+    /// The elements tag name
+    /// </summary>
+    public string Tag { get; }
+
+    /// <summary>
     /// Mimic a user "press" of the provided keys.
     /// </summary>
     /// <param name="keys">The keys to press</param>
