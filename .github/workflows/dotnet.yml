@@ -15,8 +15,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@v1
+    - name: Log Chrome Path
+      run: which chrome
     - name: Wrap Chrome
       run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
+    - name: Set Selenium Chrome Path
+      run: export SE_BROWSER_PATH=$(which chrome)
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -26,4 +30,4 @@ jobs:
     - name: Build
       run: dotnet build ./src/StageZero.sln --no-restore
     - name: Test
-      run: SE_BROWSER_PATH=$(which chrome) dotnet test ./src/StageZero.sln --no-restore
+      run: dotnet test ./src/StageZero.sln --no-restore
