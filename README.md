@@ -8,7 +8,6 @@ StageZero is an automated UI testing library for the web that allows you to use 
 
 StageZero puts flexibility and developer experience first. Want to change to a different UI testing framework (e.g. Selenium -> Playwright)? You can with next to no refactoring required in your codebase. The less time you have to think about steering the browser, the more time you can invest in your tests. StageZero makes it easy to get started with next to no initial setup required.
 
-
 ## Usage
 
 ### Registering a DriverBuilder

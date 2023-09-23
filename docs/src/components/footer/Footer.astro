@@ -1,0 +1,57 @@
+---
+const date = new Date();
+const githubLink = 'https://github.com/mitchHay/StageZero/blob/main/';
+const licenseLink = `${githubLink}LICENSE`;
+const contributeLink = `${githubLink}CONTRIBUTING`;
+---
+
+<footer class="footer">
+  <p>{`© ${date.getFullYear()} StageZero`}</p>
+  <ul>
+    <li>
+      <a href={licenseLink}>License</a>
+    </li>
+    <li>
+      <a href={contributeLink}>Contribute</a>
+    </li>
+  </ul>
+</footer>
+
+<style lang="scss">
+  .footer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: .5rem;
+
+    > * {
+      &:not(:last-child) {
+        &::after {
+          content: '|';
+          display: inline-block;
+          margin-left: .5rem;
+        }
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 !important;
+
+      li {
+        display: inline-block;
+        margin-top: 0 !important;
+
+        &:not(:first-child) {
+          margin-left: .5rem;
+        }
+
+        a {
+          text-decoration: none;
+          color: var(--sl-color-text);
+        }
+      }
+    }
+  }
+</style>

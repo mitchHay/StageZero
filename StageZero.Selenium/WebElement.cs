@@ -21,9 +21,7 @@ public class WebElement : IElementWeb
 
     public Task Click()
     {
-        return Task.Run(() =>
-            _element.Click()
-        );
+        return Task.Run(() => _element.Click());
     }
 
     public Task ClickAndHold(TimeSpan duration)
@@ -56,5 +54,43 @@ public class WebElement : IElementWeb
     public Task Type(string text)
     {
         return Task.Run(() => _element.SendKeys(text));
+    }
+
+    public Task PressKeys(Web.Keys keys)
+    {
+        return Task.Run(async () => 
+        {
+            var keyDownActions = new Actions(_driver);
+            
+            // Perform KeyDown actions
+            InvokeActionOnKey(keys, (key) => keyDownActions.KeyDown(WebKeysToString(key)));
+            keyDownActions.Perform();
+
+            // We should wait ~50ms so that we mimic a "user press"
+            await Task.Delay(50);
+
+            // Perform KeyUp actions
+            var keyUpActions = new Actions(_driver);
+            InvokeActionOnKey(keys, (key) => keyUpActions.KeyUp(WebKeysToString(key)));
+            keyUpActions.Perform();
+        });
+    }
+
+    private void InvokeActionOnKey(Web.Keys keys, Action<Web.Keys> actionToInvoke)
+    {
+        foreach (Web.Keys key in Enum.GetValues(keys.GetType()))
+        {
+            if (!keys.HasFlag(key))
+            {
+                continue;
+            }
+
+            actionToInvoke.Invoke(key);
+        }
+    }
+
+    private string WebKeysToString(Web.Keys key)
+    {
+        return (string)typeof(OpenQA.Selenium.Keys).GetField(key.ToString()).GetValue(null);
     }
 }

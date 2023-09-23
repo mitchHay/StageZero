@@ -1,0 +1,62 @@
+@use 'sass:color';
+@use 'keyframes';
+@use 'functions' as *;
+
+/* Dark mode colors. */
+:root {
+	--sl-color-accent: #7EFF66;
+	--sl-color-accent-high: #7EFF66;
+  --sl-color-primary-hover: #A9FF99;
+  --sl-color-secondary-hover: #D4FECC;
+}
+/* Light mode colors. */
+:root[data-theme='light'] {
+	--sl-color-accent: #189900;
+	--sl-color-accent-high: #189900;
+  --sl-color-primary-hover: #{color.scale(#189900, $lightness: 5%)};
+  --sl-color-secondary-hover: #D4FECC;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.action {
+  padding: pxToRem(8) pxToRem(18);
+  transition: all .125s ease-in-out;
+
+  &.primary {
+    background-color: var(--sl-color-accent);
+    color: var(--sl-color-black);
+    border-radius: pxToRem(24);
+
+    &:hover {
+      background-color: var(--sl-color-primary-hover);
+    }
+  }
+
+  &.secondary {
+    &:hover {
+      background-color: var(--sl-color-secondary-hover);
+      color: black;
+    }
+  }
+}
+
+.card {
+  border-radius: pxToRem(16);
+
+  .icon {
+    border-radius: pxToRem(8);
+  }
+}
+
+.pagination-links {
+  > a {
+    box-shadow: unset;
+
+    .link-title {
+      font-size: pxToRem(18);
+    }
+  }
+}

@@ -7,6 +7,8 @@ public interface IElementWeb : IElement
 {
     public Task Type(string text);
 
+    public Task PressKeys(Keys keys);
+
     public Task Click();
 
     public Task RightClick();

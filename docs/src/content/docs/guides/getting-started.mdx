@@ -1,0 +1,93 @@
+---
+title: Getting Started
+description: A guide detailing how to get started with the StageZero automated testing framework.
+sidebar:
+    order: 1
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Installing StageZero
+
+In order to use `StageZero` you must first install the core package, as well as your desired framework integration.
+
+<Tabs>
+    <TabItem label="Core">
+        ```sh
+        dotnet add package StageZero
+        ```
+    </TabItem>
+    <TabItem label="Playwright">
+        ```sh
+        dotnet add package StageZero.Playwright
+        ```
+    </TabItem>
+    <TabItem label="Selenium">
+        ```sh
+        dotnet add package StageZero.Selenium
+        ```
+    </TabItem>
+</Tabs>
+
+## Registering a DriverBuilder
+
+Once you've installed all the required packages, you must register your desired framework integration with our `DriverBuilder`. Don't worry, this only has to be done once! 
+For example, if you're wanting to use our one of our integrations with `NUnit` you can do:
+
+<Tabs>
+    <TabItem label="Selenium">
+        ```csharp
+        [SetUpFixture]
+        public class GlobalSetup
+        {
+            [OneTimeSetUp]
+            public class BeforeEverything()
+            {
+                DriverBuilder.Register<WebDriverBuilder>();
+            }
+        }
+        ```
+    </TabItem>
+</Tabs>
+
+That's all the setup code you'll ever have to write. Now onto writing our first test!
+
+## Writing a Test
+
+`StageZero` handles all of the underlying logic required to create, navigate, interact with elements, and terminate drivers. All you have to do is write your test, no more managing frameworks!
+
+Following on from the example provided above, you can write a test for the web like:
+
+```csharp
+public class Test
+{
+    private IDriverWeb _driver;
+
+    [SetUp]
+    public void BeforeEach()
+    {
+        _driver = DriverBuilder.Create(new WebDriverOptions());
+    }
+
+    [Test]
+    public Task NavigateToGoogle()
+    {
+        await _driver.GoTo("https://google.com");
+    }
+
+    [TearDown]
+    public Task AfterEach()
+    {
+        await _driver.Terminate();
+    }
+}
+```
+
+## Running a Test
+
+Because `StageZero` is built on the `dotnet` framework, all you have to do is run `dotnet test ./path/to/yourproj.csproj`. 
+Alternatively, if you're using an IDE you should be able to run your created test in that IDE's integrated test runner.
+
+## Done 🎉
+
+Pat yourself on the back! You've just written your first test!
