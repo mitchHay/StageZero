@@ -1,4 +1,4 @@
-﻿namespace StageZero.Selenium.Tests;
+﻿namespace StageZero.IntegrationTests;
 
 [SetUpFixture]
 public class GlobalSetup

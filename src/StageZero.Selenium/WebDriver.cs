@@ -35,13 +35,13 @@ public class WebDriver : IDriverWeb
                     chromeOptions.AddArguments(
                         // Use the new headless mode
                         // Ref: https://developer.chrome.com/articles/new-headless/
-                        "--headless",
+                        "--headless=new",
                         "--disable-gpu",
                         "--disable-dev-shm-usage"
                     );
                 }
 
-                _seleniumDriver = new ChromeDriver(chromeService);
+                _seleniumDriver = new ChromeDriver(chromeService, chromeOptions);
                 break;
             case Browser.Firefox:
                 var firefoxOptions = new FirefoxOptions();
@@ -52,7 +52,7 @@ public class WebDriver : IDriverWeb
                     firefoxOptions.AddArgument("-headless");
                 }
 
-                _seleniumDriver = new FirefoxDriver(firefoxService);
+                _seleniumDriver = new FirefoxDriver(firefoxService, firefoxOptions);
                 break;
         }
 

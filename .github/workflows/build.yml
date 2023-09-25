@@ -1,0 +1,70 @@
+name: Run build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Allow this workflow to tag main with the new deployed version
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      pkg_version: ${{ steps.output_version.outputs.pkg_version }}
+
+    steps:
+    # SETUP
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: stable
+    - name: Wrap Chrome
+      run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    # BUILD
+    - name: Restore dependencies
+      run: dotnet restore ./src/StageZero.sln
+    - name: Build
+      run: dotnet build ./src/StageZero.sln --no-restore
+    # TEST
+    - name: Test
+      run: SE_BROWSER_PATH=$(which chrome) dotnet test ./src/StageZero.sln --no-restore
+    # VERSION
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0
+    - id: output_version
+      run: echo "pkg_version=${{ env.GitVersion_NuGetVersionV2 }}" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Package
+      run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o .
+    - name: Tag Branch
+      run: |
+        git tag ${{ env.PKG_VERSION }}
+        git push origin ${{ env.PKG_VERSION }}

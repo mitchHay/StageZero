@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StageZero", "StageZero\Stag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StageZero.Selenium", "StageZero.Selenium\StageZero.Selenium.csproj", "{1BC2CF17-4D36-41BD-B4D6-0B505835BF0B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StageZero.Selenium.Tests", "StageZero.Selenium.Tests\StageZero.Selenium.Tests.csproj", "{BABA266E-7971-45FE-9257-92BA9260676A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StageZero.IntegrationTests", "StageZero.IntegrationTests\StageZero.IntegrationTests.csproj", "{BABA266E-7971-45FE-9257-92BA9260676A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

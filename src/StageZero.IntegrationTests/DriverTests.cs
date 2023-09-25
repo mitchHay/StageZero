@@ -1,4 +1,4 @@
-namespace StageZero.Selenium.Tests;
+namespace StageZero.IntegrationTests;
 
 [Parallelizable(ParallelScope.All)]
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]

@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build & deploy docs
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
+      name: StageZero docs
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
