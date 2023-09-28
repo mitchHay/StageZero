@@ -72,7 +72,9 @@ jobs:
         git push origin ${{ env.PKG_VERSION }}
     - name: Zip contents
       run: |
-        mv ./publish/*.nupkg ./publish/*.zip
+        for file in ./publish/*.nupkg; do
+          mv -- "$file" "${file%.nupkg}.zip"
+        done
     - name: Create release
       uses: ncipollo/release-action@v1
       with:
