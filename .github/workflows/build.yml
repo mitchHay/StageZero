@@ -79,6 +79,8 @@ jobs:
     - name: Create release
       uses: ncipollo/release-action@v1
       with:
+        name: StageZero-${{ env.PKG_VERSION }}
+        tag: ${{ env.PKG_VERSION }}
         artifacts: "./publish/*.nupkg"
         generateReleaseNotes: true
     
