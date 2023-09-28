@@ -76,4 +76,9 @@ jobs:
       run: |
         git tag ${{ env.PKG_VERSION }}
         git push origin ${{ env.PKG_VERSION }}
+    - name: Create release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "./publish/*.nupkg"
+        generateReleaseNotes: true
     
