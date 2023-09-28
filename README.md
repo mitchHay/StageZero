@@ -1,6 +1,6 @@
 # StageZero
 
-![Build](https://github.com/github/docs/actions/workflows/build.yml/badge.svg?branch=main)
+![Build](https://github.com/mitchHay/StageZero/actions/workflows/build.yml/badge.svg?branch=main)
 
 > **Please note**
 >
