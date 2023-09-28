@@ -1,12 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
 
     <!-- Repo info -->
     <RepositoryUrl>https://github.com/mitchHay/StageZero/tree/main/src/StageZero</RepositoryUrl> 
-    <RepositoryType>git</RepositoryType> 
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <!-- Other / description -->
     <PackageTags>StageZero;</PackageTags>
