@@ -27,5 +27,5 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      dev-dependencies:
+      doc-dependencies:
       - "*"
