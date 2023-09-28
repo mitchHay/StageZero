@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-# Allow this workflow to tag main with the new deployed version
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -54,6 +50,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    # Allow this workflow to tag main with the new deployed version
+    permissions:
+      contents: write
     env:
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
 
@@ -67,20 +66,18 @@ jobs:
       run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o ./publish
     - name: Publish
       run: dotnet nuget push ./publish/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-    - name: Upload package contents
-      uses: actions/upload-artifact@v3
-      with:
-        name: StageZero-v${{ env.PKG_VERSION }}
-        path: ./publish/*.nupkg
     - name: Tag
       run: |
         git tag ${{ env.PKG_VERSION }}
         git push origin ${{ env.PKG_VERSION }}
+    - name: Zip contents
+      run: |
+        mv ./publish/*.nupkg ./publish/*.zip
     - name: Create release
       uses: ncipollo/release-action@v1
       with:
-        name: StageZero-${{ env.PKG_VERSION }}
+        name: StageZero v${{ env.PKG_VERSION }}
         tag: ${{ env.PKG_VERSION }}
-        artifacts: "./publish/*.nupkg"
+        artifacts: "./publish/*.zip"
         generateReleaseNotes: true
     
