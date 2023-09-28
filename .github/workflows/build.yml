@@ -65,9 +65,15 @@ jobs:
         dotnet-version: 6.0.x
     - name: Package
       run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o ./publish
+    - name: Publish
+      run: dotnet nuget push ./publish/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
     - name: Upload package contents
       uses: actions/upload-artifact@v3
       with:
-        name: StageZero v${{ env.PKG_VERSION }}
+        name: StageZero-v${{ env.PKG_VERSION }}
         path: ./publish/*.nupkg
+    - name: Tag
+      run: |
+        git tag ${{ env.PKG_VERSION }}
+        git push origin ${{ env.PKG_VERSION }}
     
