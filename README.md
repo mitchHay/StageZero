@@ -46,7 +46,7 @@ public class Test
     [Test]
     public Task NavigateToGoogle()
     {
-        await _driver.GoTo("https://google.com");
+        await _driver.Navigate().ToUrl("https://google.com");
     }
 
     [TearDown]
