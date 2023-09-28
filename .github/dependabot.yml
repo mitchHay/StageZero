@@ -13,13 +13,13 @@ updates:
     groups:
       dev-dependencies:
         patterns:
-        - "NUnit*"
-        - "coverlet*"
-        - "Microsoft.NET.Test*"
+          - "NUnit*"
+          - "coverlet*"
+          - "Microsoft.NET.Test*"
 
       stagezero-selenium:
         patterns:
-        - "Selenium.*"
+          - "Selenium.*"
 
   - package-ecosystem: "npm"
     directory: "/docs"
@@ -27,5 +27,6 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      doc-dependencies:
-      - "*"
+      dev-dependencies:
+        patterns:
+          - "*"
