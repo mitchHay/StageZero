@@ -2,9 +2,9 @@ name: Run build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 # Allow this workflow to tag main with the new deployed version
 permissions:
@@ -46,6 +46,7 @@ jobs:
         versionSpec: '5.x'
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0
+    # OUTPUT
     - id: output_version
       run: echo "pkg_version=${{ env.GitVersion_NuGetVersionV2 }}" >> "$GITHUB_OUTPUT"
 
@@ -63,8 +64,17 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Package
-      run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o .
-    - name: Tag Branch
-      run: |
-        git tag ${{ env.PKG_VERSION }}
-        git push origin ${{ env.PKG_VERSION }}
+      run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o ./publish
+    - name: Install GitReleaseManager
+      uses: gittools/actions/gitreleasemanager/setup@v0
+      with:
+        versionSpec: '0.10.x'
+    - uses: gittools/actions/gitreleasemanager/createv0
+        name: Create release with GitReleaseManager
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: 'mitchHay'
+          repository: 'StageZero'
+          milestone: ${{ env.PKG_VERSION }}
+          name: 'v${{ env.PKG_VERSION }}'
+          assets: ./publish/*.nupkg
