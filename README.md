@@ -1,5 +1,12 @@
 # StageZero
 
+![Build](https://github.com/github/docs/actions/workflows/build.yml/badge.svg?branch=main)
+
+> **Please note**
+>
+> This project is a work-in-progress, some features may be missing and you may experience some bugs.
+> If you do experience any issues, please raise them [here](https://github.com/mitchHay/StageZero/issues/new).
+
 ## What is StageZero?
 
 StageZero is an automated UI testing library for the web that allows you to use whatever underlying WebDriver you wish (e.g. Selenium, or Playwright) to steer the browser.
