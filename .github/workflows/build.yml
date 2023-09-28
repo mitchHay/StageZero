@@ -69,12 +69,12 @@ jobs:
       uses: gittools/actions/gitreleasemanager/setup@v0
       with:
         versionSpec: '0.10.x'
-    # - uses: gittools/actions/gitreleasemanager/createv0
-    #     name: Create release with GitReleaseManager
-    #     with:
-    #       token: ${{ secrets.GITHUB_TOKEN }}
-    #       owner: 'mitchHay'
-    #       repository: 'StageZero'
-    #       milestone: ${{ env.PKG_VERSION }}
-    #       name: 'v${{ env.PKG_VERSION }}'
-    #       assets: ./publish/*.nupkg
+    - name: Create release with GitReleaseManager
+      uses: gittools/actions/gitreleasemanager/createv0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        owner: 'mitchHay'
+        repository: 'StageZero'
+        milestone: ${{ env.PKG_VERSION }}
+        name: 'v${{ env.PKG_VERSION }}'
+        assets: ./publish/*.nupkg
