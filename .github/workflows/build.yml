@@ -65,16 +65,9 @@ jobs:
         dotnet-version: 6.0.x
     - name: Package
       run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o ./publish
-    - name: Install GitReleaseManager
-      uses: gittools/actions/gitreleasemanager/setup@v0
+    - name: Upload package contents
+      uses: actions/upload-artifact@v3
       with:
-        versionSpec: '0.10.x'
-    - name: Create release with GitReleaseManager
-      uses: gittools/actions/gitreleasemanager/createv0
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        owner: 'mitchHay'
-        repository: 'StageZero'
-        milestone: ${{ env.PKG_VERSION }}
-        name: 'v${{ env.PKG_VERSION }}'
-        assets: ./publish/*.nupkg
+        name: StageZero v${{ env.PKG_VERSION }}
+        path: ./publish/*.nupkg
+    
