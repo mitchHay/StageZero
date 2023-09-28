@@ -10,22 +10,22 @@ updates:
     open-pull-requests-limit: 10
     schedule:
       interval: "weekly"
-    # groups:
-    #   dev-dependencies:
-    #     patterns:
-    #     - "NUnit*"
-    #     - "coverlet*"
-    #     - "Microsoft.NET.Test*"
+    groups:
+      dev-dependencies:
+        patterns:
+        - "NUnit*"
+        - "coverlet*"
+        - "Microsoft.NET.Test*"
 
-    #   stagezero-selenium:
-    #     patterns:
-    #     - "Selenium.*"
+      stagezero-selenium:
+        patterns:
+        - "Selenium.*"
 
   - package-ecosystem: "npm"
     directory: "/docs"
     open-pull-requests-limit: 10
     schedule:
       interval: "weekly"
-    # groups:
-    #   dev-dependencies:
-    #   - "*"
+    groups:
+      dev-dependencies:
+      - "*"
