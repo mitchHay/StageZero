@@ -2,9 +2,9 @@ name: Run build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 # Allow this workflow to tag main with the new deployed version
 permissions:
