@@ -50,7 +50,7 @@ jobs:
     - id: output_version
       run: echo "pkg_version=${{ env.GitVersion_NuGetVersionV2 }}" >> "$GITHUB_OUTPUT"
 
-  deploy:
+  publish:
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest

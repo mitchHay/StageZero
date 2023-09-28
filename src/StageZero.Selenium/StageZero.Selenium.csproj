@@ -11,6 +11,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
+
+    <!-- Repo info -->
+    <RepositoryUrl>https://github.com/mitchHay/StageZero/tree/main/src/StageZero.Selenium</RepositoryUrl> 
+    <RepositoryType>git</RepositoryType> 
+
+    <!-- Other / description -->
+    <PackageTags>StageZero;Selenium;StageZero.Selenium;</PackageTags>
+    <Description>
+      The StageZero Selenium implementation.
+    </Description>
   </PropertyGroup>
 
 </Project>

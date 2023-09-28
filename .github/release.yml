@@ -1,0 +1,17 @@
+changelog:
+  categories:
+    - title: ⚠️ Breaking Changes
+      labels:
+        - breaking-change
+    - title: 🎉 What's new?
+      labels:
+        - enhancement
+    - title: 🐛 Fixes
+      labels:
+        - bug
+    - title: 📦 Updated dependencies
+      labels:
+        - dependencies
+    - title: ☕️ Misc. changes
+      labels:
+        - "*"
