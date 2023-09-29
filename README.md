@@ -1,6 +1,7 @@
 # StageZero
 
 ![Build](https://github.com/mitchHay/StageZero/actions/workflows/build.yml/badge.svg?branch=main)
+[![CodeQL](https://github.com/mitchHay/StageZero/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/mitchHay/StageZero/actions/workflows/github-code-scanning/codeql)
 
 > **Please note**
 >
