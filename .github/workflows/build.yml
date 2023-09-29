@@ -34,7 +34,13 @@ jobs:
       run: dotnet build ./src/StageZero.sln --no-restore
     # TEST
     - name: Test
-      run: SE_BROWSER_PATH=$(which chrome) dotnet test ./src/StageZero.sln --no-restore
+      run: SE_BROWSER_PATH=$(which chrome) dotnet test ./src/StageZero.sln --no-restore /p:CollectCoverage=true /p:CoverletOutput=/coverage/ /p:MergeWith="./coverage/coverage.json" /p:CoverletOutputFormat=\"cobertura,json\" -m:1
+    # CODE COVERAGE
+    - name: Generate code coverage report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: ./coverage/coverage.cobertura.xml
+        badge: true
     # VERSION
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0
