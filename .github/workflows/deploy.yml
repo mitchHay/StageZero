@@ -3,6 +3,8 @@ name: Build & deploy docs
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
@@ -25,6 +27,7 @@ jobs:
             node-version: 18
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
