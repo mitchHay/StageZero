@@ -46,4 +46,11 @@ public interface IElementWeb : IElement
     /// </summary>
     /// <param name="duration">The duration to hold the click for</param>
     public Task ClickAndHold(TimeSpan duration);
+
+    /// <summary>
+    /// Get the value of a HTML attribute from its specified name
+    /// </summary>
+    /// <param name="attributeName">The HTML attribute name</param>
+    /// <returns>The value of the HTML attribute</returns>
+    public Task<string> GetAttributeValue(string attributeName);
 }
