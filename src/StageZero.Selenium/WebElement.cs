@@ -12,11 +12,17 @@ public class WebElement : IElementWeb
     private readonly IWebElement _element;
     private readonly Actions _actions;
 
+    /// <inheritdoc/>
     public string ClassName => _element.GetAttribute("class");
 
+    /// <inheritdoc/>
     public string Id => _element.GetAttribute("id");
 
+    /// <inheritdoc/>
     public string Tag => _element.TagName;
+
+    /// <inheritdoc/>
+    public string Text => _element.Text;
 
     public WebElement(IWebDriver driver, IWebElement element)
     {
@@ -34,9 +40,14 @@ public class WebElement : IElementWeb
     /// <inheritdoc/>
     public Task ClickAndHold(TimeSpan duration)
     {
-        return Task.Run(() =>
+        return Task.Run(async () =>
         {
             _actions.ClickAndHold(_element)
+                    .Perform();
+
+            await Task.Delay(duration);
+
+            _actions.Release()
                     .Perform();
         });
     }
@@ -86,6 +97,12 @@ public class WebElement : IElementWeb
             InvokeActionOnKey(keys, (key) => keyUpActions.KeyUp(WebKeysToString(key)));
             keyUpActions.Perform();
         });
+    }
+
+    /// <inheritdoc/>
+    public Task<string> GetAttributeValue(string attributeName)
+    {
+        return Task.Run(() => _element.GetAttribute(attributeName));
     }
 
     private void InvokeActionOnKey(Web.Keys keys, Action<Web.Keys> actionToInvoke)
