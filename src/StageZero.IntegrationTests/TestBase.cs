@@ -13,7 +13,7 @@ public class TestBase
     {
         Driver = DriverBuilder.Create(new WebDriverOptions
         {
-            Headless = false
+            Headless = true
         });
 
         if (ShouldNavigateToTestSite)
