@@ -35,6 +35,11 @@ public interface IDriverWeb : IDriver
     public INavigate Navigate();
 
     /// <summary>
+    /// Refresh the current web page
+    /// </summary>
+    public Task Refresh();
+
+    /// <summary>
     /// Terminate the current <see cref="IDriverWeb"/> instance.
     /// </summary>
     public Task Terminate();
