@@ -3,8 +3,10 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using StageZero.Selenium.Browser;
 using StageZero.Web;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StageZero.Selenium;
@@ -23,38 +25,10 @@ public class WebDriver : IDriverWeb
 
     public WebDriver(WebDriverOptions options)
     {
-        // TODO: Extract into some kind of factory
-        switch(options.Browser)
-        {
-            case Browser.Chrome:
-                var chromeOptions = new ChromeOptions();
-                var chromeService = ChromeDriverService.CreateDefaultService();
-
-                if (options.Headless)
-                {
-                    chromeOptions.AddArguments(
-                        // Use the new headless mode
-                        // Ref: https://developer.chrome.com/articles/new-headless/
-                        "--headless=new",
-                        "--disable-gpu",
-                        "--disable-dev-shm-usage"
-                    );
-                }
-
-                _seleniumDriver = new ChromeDriver(chromeService, chromeOptions);
-                break;
-            case Browser.Firefox:
-                var firefoxOptions = new FirefoxOptions();
-                var firefoxService = FirefoxDriverService.CreateDefaultService();
-
-                if (options.Headless)
-                {
-                    firefoxOptions.AddArgument("-headless");
-                }
-
-                _seleniumDriver = new FirefoxDriver(firefoxService, firefoxOptions);
-                break;
-        }
+        _seleniumDriver = BrowserDriverFactory
+            .New
+            .Build(options)
+            .CreateWebDriver();
 
         _webDriverWait = new WebDriverWait(_seleniumDriver, TimeSpan.FromSeconds(5));
     }
@@ -83,6 +57,12 @@ public class WebDriver : IDriverWeb
     public INavigate Navigate()
     {
         return new SeleniumNavigate(_seleniumDriver);
+    }
+
+    /// <inheritdoc/>
+    public Task Refresh()
+    {
+        return Task.Run(() => _seleniumDriver.Navigate().Refresh());
     }
 
     /// <inheritdoc/>

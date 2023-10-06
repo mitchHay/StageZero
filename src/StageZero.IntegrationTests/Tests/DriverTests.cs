@@ -25,4 +25,21 @@ public class DriverTests : TestBase
 
         Assert.That(Driver.Url, Is.EqualTo(UrlToNavigate));
     }
+
+    [Test]
+    public async Task CanRefresh()
+    {
+        await Driver.Navigate().ToUrl(TestSitePath);
+
+        var testInputElement = await Driver.GetElement("#test-input");
+        await testInputElement.Type("Testing");
+
+        await Driver.Refresh();
+
+        // Re-wait for the element again because we just invoked a refresh and it may not be there
+        testInputElement = await Driver.GetElement("#test-input");
+        var inputValue = await testInputElement.GetAttributeValue("value");
+
+        Assert.That(inputValue, Is.Empty);
+    }
 }
