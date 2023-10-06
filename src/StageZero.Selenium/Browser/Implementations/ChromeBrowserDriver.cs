@@ -22,6 +22,7 @@ internal class ChromeBrowserDriver : BrowserDriver
             arguments.Add("--headless=new");
         }
 
+        chromeOptions.AddArguments(arguments);
         return new ChromeDriver(
             ChromeDriverService.CreateDefaultService(),
             chromeOptions
