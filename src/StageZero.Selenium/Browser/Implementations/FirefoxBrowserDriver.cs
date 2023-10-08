@@ -16,6 +16,11 @@ internal class FirefoxBrowserDriver : BrowserDriver
             arguments.Add("-headless");
         }
 
+        if (!string.IsNullOrEmpty(Options.EmulatedDeviceName))
+        {
+#warning Mobile emulation is not supported in Firefox, please consider using an alternative supported browser (e.g. Chrome or Edge)
+        }
+
         firefoxOptions.AddArguments(arguments);
 
         return new FirefoxDriver(

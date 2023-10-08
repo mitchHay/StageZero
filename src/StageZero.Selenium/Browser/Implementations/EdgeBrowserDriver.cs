@@ -16,6 +16,11 @@ internal class EdgeBrowserDriver : BrowserDriver
             arguments.Add("headless");
         }
 
+        if (!string.IsNullOrEmpty(Options.EmulatedDeviceName))
+        {
+            options.EnableMobileEmulation(Options.EmulatedDeviceName);
+        }
+
         options.AddArguments(arguments);
 
         return new EdgeDriver(

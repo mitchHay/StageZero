@@ -66,6 +66,18 @@ public class WebDriver : IDriverWeb
     }
 
     /// <inheritdoc/>
+    public Web.IWindow Window()
+    {
+        return new Window(_seleniumDriver);
+    }
+
+    /// <inheritdoc/>
+    public IDocument Document()
+    {
+        return new Document(_seleniumDriver);
+    }
+
+    /// <inheritdoc/>
     public Task Terminate()
     {
         return Task.Run(() =>

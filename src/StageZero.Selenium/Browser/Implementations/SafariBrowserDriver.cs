@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Safari;
-using System;
 
 namespace StageZero.Selenium.Browser.Implementations;
 
@@ -11,10 +10,12 @@ internal class SafariBrowserDriver : BrowserDriver
         var safariOptions = new SafariOptions();
         if (Options.Headless)
         {
-            Console.WriteLine(
-                "Headless mode is not supported in Safari :/" + "\n" +
-                "Learn more at: https://github.com/SeleniumHQ/selenium/issues/5985"
-            );
+#warning Headless mode is not supported in Safari, learn more at: https://github.com/SeleniumHQ/selenium/issues/5985
+        }
+
+        if (!string.IsNullOrEmpty(Options.EmulatedDeviceName))
+        {
+#warning Mobile emulation is not supported in Firefox, please consider using an alternative supported browser (e.g. Chrome or Edge)
         }
 
         return new SafariDriver(

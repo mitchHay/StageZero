@@ -22,6 +22,11 @@ internal class ChromeBrowserDriver : BrowserDriver
             arguments.Add("--headless=new");
         }
 
+        if (!string.IsNullOrEmpty(Options.EmulatedDeviceName))
+        {
+            chromeOptions.EnableMobileEmulation(Options.EmulatedDeviceName);
+        }
+
         chromeOptions.AddArguments(arguments);
         return new ChromeDriver(
             ChromeDriverService.CreateDefaultService(),
