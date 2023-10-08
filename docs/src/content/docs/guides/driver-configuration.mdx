@@ -1,0 +1,41 @@
+---
+title: Configuring WebDriverOptions
+description: A guide detailing how to configure StageZero's test driver.
+sidebar:
+    order: 2
+---
+
+A big part of how `StageZero` works is via configuration, which is steered by [`WebDriverOptions`](/StageZero/reference/stagezero/web-driver-options)
+
+## Providing a Driver with Options
+
+You can configure your `IDriverWeb` instance by newing up a `WebDriverOptions` instance.
+
+```csharp
+var config = new WebDriverOptions();
+var driver = DriverBuilder.Create(config);
+```
+
+### Targeting a Different Browser
+
+Lets say you wanted to run your tests against `Firefox`. To do so, you can change your target browser in the `WebDriverOptions` like so:
+
+```csharp
+var config = new WebDriverOptions
+{
+    Browser = Browser.Firefox
+};
+```
+
+### Targeting a Mobile Device
+
+So you want to test against a mobile sized viewport? You can do so (only in Chrome and Edge) by providing the following config:
+
+```csharp
+var config = new WebDriverOptions
+{
+    EmulatedDeviceName = Device.IPhone12Pro
+};
+```
+
+For a full list of supported options to provide your `IDriverWeb` instance, please head to the [`WebDriverOptions`](/StageZero/reference/stagezero/web-driver-options) documentation.
