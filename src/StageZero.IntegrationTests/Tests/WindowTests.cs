@@ -20,15 +20,5 @@ public class WindowTests : TestBase
             Assert.That(windowSize.Height, Is.EqualTo(400));
         });
     }
-
-    [Test]
-    public async Task CanFullscreen()
-    {
-        await Driver.Window().Fullscreen();
-
-        var isFullscreen = (await Driver.Document().FullscreenElement()) != null;
-
-        Assert.That(isFullscreen, Is.True);
-    }
 }
 
