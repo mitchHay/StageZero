@@ -40,6 +40,18 @@ public interface IDriverWeb : IDriver
     public Task Refresh();
 
     /// <summary>
+    /// The browser window 
+    /// </summary>
+    /// <returns>A new <see cref="IWindow"/> instance.</returns>
+    public IWindow Window();
+
+    /// <summary>
+    /// The browser document
+    /// </summary>
+    /// <returns>A new <see cref="IDocument"/> instance.</returns>
+    public IDocument Document();
+
+    /// <summary>
     /// Terminate the current <see cref="IDriverWeb"/> instance.
     /// </summary>
     public Task Terminate();
