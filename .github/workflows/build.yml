@@ -59,19 +59,6 @@ jobs:
       with:
         recreate: true
         path: code-coverage-results.md
-    - name: Generate HTML report
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.1.26
-      with:
-        reports: '/src/coverage/coverage.cobertura.xml'
-        targetdir: '/src/coverage/report'
-        reporttypes: 'HtmlInline'
-        tag: '${{ github.run_number }}_${{ github.run_id }}'
-    - name: Upload coverage report artifact
-      uses: actions/upload-artifact@v2.2.3
-      if: github.event_name == 'pull_request'
-      with:
-        name: HTML Coverage Report        
-        path: /src/coverage/report
     # VERSION
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0
@@ -82,6 +69,20 @@ jobs:
     # OUTPUT
     - id: output_version
       run: echo "pkg_version=${{ env.GitVersion_NuGetVersionV2 }}" >> "$GITHUB_OUTPUT"
+    # CODE COVERAGE (HTML REPORT)
+    - name: Generate HTML report
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.1.26
+      with:
+        reports: '${{ github.workspace }}/src/coverage/coverage.cobertura.xml'
+        targetdir: '${{ github.workspace }}/src/coverage/report'
+        reporttypes: 'HtmlInline'
+        tag: '${{ env.GitVersion_NuGetVersionV2 }}'
+    - name: Upload coverage report artifact
+      uses: actions/upload-artifact@v2.2.3
+      if: github.event_name == 'pull_request'
+      with:
+        name: HTML Coverage Report        
+        path: '${{ github.workspace }}/src/coverage/report'
 
   publish:
     if: github.ref == 'refs/heads/main'
