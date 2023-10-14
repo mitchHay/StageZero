@@ -60,5 +60,36 @@ public class ElementTests : TestBase
 
         return holdButtonElement.Text;
     }
+
+    [Test(ExpectedResult = "CTRL + B DETECTED!")]
+    public async Task<string> CanPressKeys()
+    {
+        var bodyElement = await Driver.GetElement("body");
+        await bodyElement.PressKeys(Keys.Control | Keys.B);
+
+        var alertText = (await Driver.GetElement("#alert-text")).Text;
+        return alertText;
+    }
+
+    [Test(ExpectedResult = "test-class")]
+    public async Task<string> CanGetClassName()
+    {
+        var testClassElement = await Driver.GetElement(".test-class");
+        return testClassElement.ClassName;
+    }
+
+    [Test(ExpectedResult = "test-id")]
+    public async Task<string> CanGetId()
+    {
+        var testIdElement = await Driver.GetElement("#test-id");
+        return testIdElement.Id;
+    }
+
+    [Test(ExpectedResult = "test-tag")]
+    public async Task<string> CanGetTagName()
+    {
+        var testTagElement = await Driver.GetElement("#test-tag");
+        return testTagElement.Tag;
+    }
 }
 
