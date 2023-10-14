@@ -58,6 +58,17 @@ jobs:
       with:
         recreate: true
         path: code-coverage-results.md
+    - name: Generate HTML report
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.1.26
+      with:
+        reports: /src/coverage/coverage.cobertura.xml
+        targetdir: /src/coverage/report
+        reporttypes: 'HtmlInline'
+    - name: Upload coverage report artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: HTML Coverage Report        
+        path: /src/coverage/report
     # VERSION
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0
