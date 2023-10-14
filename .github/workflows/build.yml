@@ -75,13 +75,13 @@ jobs:
       with:
         reports: '${{ github.workspace }}/src/coverage/coverage.cobertura.xml'
         targetdir: '${{ github.workspace }}/src/coverage/report'
-        reporttypes: 'HtmlInline'
+        reporttypes: 'Html_Dark'
         tag: '${{ env.GitVersion_NuGetVersionV2 }}'
     - name: Upload coverage report artifact
       uses: actions/upload-artifact@v2.2.3
       if: github.event_name == 'pull_request'
       with:
-        name: HTML Coverage Report        
+        name: HTML Coverage Report
         path: '${{ github.workspace }}/src/coverage/report'
 
   publish:
