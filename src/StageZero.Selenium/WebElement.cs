@@ -2,7 +2,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using StageZero.Web;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WordsToNumbers;
 
 namespace StageZero.Selenium;
 
@@ -120,6 +122,25 @@ public class WebElement : IElementWeb
 
     private string WebKeysToString(Web.Keys key)
     {
-        return (string)typeof(OpenQA.Selenium.Keys).GetField(key.ToString()).GetValue(null);
+        var isQwerty = new Regex("[A-Z]").IsMatch(key.ToString()) && key.ToString().Length == 1;
+        if (isQwerty)
+        {
+            return key.ToString();
+        }
+
+        // FUNCTIONAL KEYS
+        try
+        {
+            var keysType = typeof(OpenQA.Selenium.Keys);
+            var fieldInfo = keysType.GetField(key.ToString());
+
+            return (string)fieldInfo.GetValue(null);
+        }
+        // NUMERIC KEYS
+        catch(Exception)
+        {
+            var converter = new SimpleReplacementStrategy();
+            return converter.ConvertWordsToNumbers(key.ToString());
+        }
     }
 }

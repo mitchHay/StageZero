@@ -20,5 +20,20 @@ public class WindowTests : TestBase
             Assert.That(windowSize.Height, Is.EqualTo(400));
         });
     }
+
+    [Test]
+    public void CanGetCurrentHandle()
+    {
+        Assert.That(Driver.Window().CurrentHandle, Is.Not.Null);
+    }
+
+    [Test]
+    public void CanGetHandles()
+    {
+        var handles = Driver.Window().Handles;
+
+        Assert.That(handles, Is.Not.Null);
+        Assert.That(handles, Is.Not.Empty);
+    }
 }
 
