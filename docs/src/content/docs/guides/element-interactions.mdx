@@ -1,0 +1,64 @@
+---
+title: Interacting with Elements
+description: A guide detailing how to interact with Web elements using StageZero's test driver.
+sidebar:
+    order: 3
+---
+
+As we all know, on the modern web you can interact with elements in various different ways. 
+That's pretty neat, but can sometimes be tricky to test! `StageZero` aims to remove that concern for you, so all you're thinking about is how to write your test.
+
+## Element interactions
+
+Here are some common element interaction use cases driven by `StageZero`.
+
+### Clicking an element
+
+```csharp
+var buttonElement = await Driver.GetElement("#btn-element");
+await buttonElement.Click();
+```
+
+### Right clicking an element
+
+```csharp
+var rightClickElement = await Driver.GetElement("#right-click-element");
+await rightClickElement.RightClick();
+```
+
+### Double clicking an element
+
+```csharp
+var buttonElement = await Driver.GetElement("#btn-element");
+await buttonElement.DoubleClick();
+```
+
+### Typing text
+
+```csharp
+var inputElement = await Driver.GetElement("#input-element");
+await inputElement.Type("Just some text");
+```
+
+### Holding an element
+
+```csharp
+var elementToHold = await Driver.GetElement("#hold-element");
+var timeToHold = TimeSpan.FromSeconds(1);
+
+await elementToHold.ClickAndHold(timeToHold);
+```
+
+### Scrolling to an element
+
+```csharp
+var scrolledToElement = await Driver.ScrollToElement("#scrolled-to-element");
+```
+
+### Keyboard shortcuts
+
+```csharp
+var shortcutElement = await Driver.GetElement("#shortcut-element");
+await shortcutElement.PressKeys(Keys.Control | Keys.S);
+```
+

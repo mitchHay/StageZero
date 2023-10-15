@@ -1,8 +1,10 @@
 ---
 const date = new Date();
-const githubLink = 'https://github.com/mitchHay/StageZero/blob/main/';
+const githubBase = 'https://github.com/mitchHay/StageZero/';
+const githubLink = `${githubBase}blob/main/`;
 const licenseLink = `${githubLink}LICENSE`;
 const contributeLink = `${githubLink}CONTRIBUTING`;
+import { version } from '../../../package.json';
 ---
 
 <footer class="footer">
@@ -13,6 +15,9 @@ const contributeLink = `${githubLink}CONTRIBUTING`;
     </li>
     <li>
       <a href={contributeLink}>Contribute</a>
+    </li>
+    <li>
+      <a href=`${githubBase}tree/${version}`>Latest v{ version }</a>
     </li>
   </ul>
 </footer>
