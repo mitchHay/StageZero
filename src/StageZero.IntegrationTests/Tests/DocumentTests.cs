@@ -10,6 +10,9 @@ public class DocumentTests : TestBase
     [Test]
     public async Task CanExecuteJs()
     {
+        // Invoke a "wait" for the element to be displayed
+        _ = Driver.GetElement("#test-input");
+
         var inputElementByJs = await Driver.Document().ExecuteJavaScript<IElementWeb>("return document.getElementById('test-input')");
         Assert.That(inputElementByJs, Is.Not.Null);
     }
