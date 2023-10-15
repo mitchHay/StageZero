@@ -30,7 +30,7 @@ jobs:
       - name: Determine Version
         uses: gittools/actions/gitversion/execute@v0
       - name: Version site
-        run: npm version ${{ env.GitVersion_NuGetVersionV2 }}
+        run: cd ${{ github.workspace }}/docs && npm version ${{ env.GitVersion_NuGetVersionV2 }}
       - name: Install, build, and upload your site
         uses: withastro/action@v0
         with:
