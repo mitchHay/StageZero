@@ -49,7 +49,22 @@ public sealed class Document : IDocument
     {
         return Task.Run(async () =>
         {
-            var element = await ExecuteJavaScript<OpenQA.Selenium.WebElement>(script);
+            OpenQA.Selenium.WebElement element = null;
+
+            var tryCount = 2;
+            while (tryCount > 0 && element == null)
+            {
+                element = await ExecuteJavaScript<OpenQA.Selenium.WebElement>(script);
+                tryCount -= 1;
+
+                if (element != null)
+                {
+                    break;
+                }
+
+                await Task.Delay(50);
+            }
+
             if (element == null)
             {
                 return null;
