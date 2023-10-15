@@ -20,6 +20,9 @@ export default defineConfig({
 			social: {
 				github: 'https://github.com/mitchHay/StageZero',
 			},
+      editLink: {
+        baseUrl: 'https://github.com/mitchHay/StageZero/edit/main/docs/',
+      },
 			sidebar: [
 				{
 					label: 'Guides',
