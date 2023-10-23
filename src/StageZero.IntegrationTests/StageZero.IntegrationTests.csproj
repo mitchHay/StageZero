@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StageZero.Playwright\StageZero.Playwright.csproj" />
     <ProjectReference Include="..\StageZero.Selenium\StageZero.Selenium.csproj" />
   </ItemGroup>
 
