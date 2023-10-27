@@ -38,7 +38,7 @@ public class TestBase
         // Create the driver
         Driver = DriverBuilder.Create(new WebDriverOptions
         {
-            Headless = false
+            Headless = true
         });
 
         var rootDirectory = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().LastIndexOf("src"));
