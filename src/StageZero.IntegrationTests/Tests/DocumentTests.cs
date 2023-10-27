@@ -2,7 +2,7 @@
 
 public class DocumentTests : TestBase
 {
-    public DocumentTests()
+    public DocumentTests(Type driverBuilderType) : base(driverBuilderType)
     {
         ShouldNavigateToTestSite = true;
     }
