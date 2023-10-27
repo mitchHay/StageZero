@@ -4,6 +4,10 @@ public class DriverTests : TestBase
 {
     private const string UrlToNavigate = "https://www.google.com/";
 
+    public DriverTests(Type driverBuilderType) : base(driverBuilderType)
+    {
+    }
+
     [Test(ExpectedResult = true)]
     public bool DriverIsDefined()
     {
@@ -40,6 +44,6 @@ public class DriverTests : TestBase
         testInputElement = await Driver.GetElement("#test-input");
         var inputValue = await testInputElement.GetAttributeValue("value");
 
-        Assert.That(inputValue, Is.Empty);
+        Assert.That(string.IsNullOrEmpty(inputValue), Is.True);
     }
 }

@@ -2,7 +2,7 @@
 
 public class WindowTests : TestBase
 {
-    public WindowTests()
+    public WindowTests(Type driverBuilderType) : base(driverBuilderType)
     {
         ShouldNavigateToTestSite = true;
     }

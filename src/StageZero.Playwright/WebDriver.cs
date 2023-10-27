@@ -93,7 +93,7 @@ public class WebDriver : IDriverWeb
         return Task.Run(() =>
         {
             var element = _page.Locator(cssSelector);
-            return (IElementWeb)new WebElement(element);
+            return (IElementWeb)new WebElement(element, _page, cssSelector);
         });
     }
 

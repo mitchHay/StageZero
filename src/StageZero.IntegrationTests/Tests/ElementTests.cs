@@ -2,7 +2,7 @@
 
 public class ElementTests : TestBase
 {
-    public ElementTests()
+    public ElementTests(Type driverBuilderType) : base(driverBuilderType)
     {
         ShouldNavigateToTestSite = true;
     }

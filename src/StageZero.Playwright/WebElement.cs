@@ -8,18 +8,32 @@ namespace StageZero.Playwright;
 public class WebElement : IElementWeb
 {
     private readonly ILocator _locator;
+    private readonly string _cssSelector;
+    private readonly IPage _page;
 
     public string ClassName => GetAttributeValue("class").Result;
 
     public string Id => GetAttributeValue("id").Result;
 
-    public string Tag => _locator.EvaluateAsync<string>("e => e.tagName").Result;
+    public string Tag 
+    { 
+        get
+        {
+            var handle = _page.WaitForSelectorAsync(_cssSelector).Result;
+            var tagNameProp = handle.GetPropertyAsync("tagName").Result;
+            var tagNameValue = tagNameProp.JsonValueAsync<string>().Result;
+
+            return tagNameValue.ToLower();
+        } 
+    }
 
     public string Text => _locator.TextContentAsync().Result;
 
-    public WebElement(ILocator locator)
+    public WebElement(ILocator locator, IPage page, string cssSelector)
     {
         _locator = locator;
+        _cssSelector = cssSelector;
+        _page = page;
     }
 
     public async Task Click()
@@ -42,6 +56,11 @@ public class WebElement : IElementWeb
 
     public async Task<string> GetAttributeValue(string attributeName)
     {
+        if (attributeName == "value")
+        {
+            return await _locator.InputValueAsync();
+        }
+
         return await _locator.GetAttributeAsync(attributeName);
     }
 
