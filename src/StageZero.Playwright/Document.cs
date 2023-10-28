@@ -26,7 +26,7 @@ public class Document : IDocument
 
     public async Task<IElementWeb> FullscreenElement()
     {
-        var fullScreenElement = await ExecuteJavaScript<object>("return document.fullscreenElement");
+        var fullScreenElement = await ExecuteJavaScript<object>("document.fullscreenElement");
         return null;
     }
 }

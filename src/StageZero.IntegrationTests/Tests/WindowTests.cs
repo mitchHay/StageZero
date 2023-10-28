@@ -7,6 +7,13 @@ public class WindowTests : TestBase
         ShouldNavigateToTestSite = true;
     }
 
+    [SetUp]
+    public async Task BeforeEach()
+    {
+        // Wait for the window to load
+        await Task.Delay(250);
+    }
+
     [Test]
     public async Task CanResize()
     {

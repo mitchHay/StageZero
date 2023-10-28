@@ -126,6 +126,6 @@ public class WebDriver : IDriverWeb
 
     public IWindow Window()
     {
-        throw new System.NotImplementedException();
+        return new Window(_page);
     }
 }
