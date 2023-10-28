@@ -12,9 +12,23 @@ public class WebElement : IElementWeb
     private readonly string _cssSelector;
     private readonly IPage _page;
 
-    public string ClassName => GetAttributeValue("class").Result;
+    public string ClassName
+    {
+        get
+        {
+            GetAttributeValue("class").Wait();
+            return GetAttributeValue("class").Result;
+        }
+    }
 
-    public string Id => GetAttributeValue("id").Result;
+    public string Id
+    {
+        get
+        {
+            GetAttributeValue("id").Wait();
+            return GetAttributeValue("id").Result;
+        }
+    }
 
     public string Tag 
     { 
@@ -28,7 +42,14 @@ public class WebElement : IElementWeb
         } 
     }
 
-    public string Text => _locator.TextContentAsync().Result;
+    public string Text
+    {
+        get
+        {
+            _locator.TextContentAsync().Wait();
+            return _locator.TextContentAsync().Result;
+        }
+    }
 
     public WebElement(ILocator locator, IPage page, string cssSelector)
     {
@@ -83,17 +104,7 @@ public class WebElement : IElementWeb
             keysToPress.Add(key.ToString());
         }
 
-        // Press the keys
-        foreach (var keyToPress in keysToPress)
-        {
-            await _page.Keyboard.DownAsync(keyToPress);
-        }
-
-        // Release the keys
-        foreach (var keyToRelease in keysToPress)
-        {
-            await _page.Keyboard.UpAsync(keyToRelease);
-        }
+        await _locator.PressAsync(string.Join("+", keysToPress));
     }
 
     public async Task RightClick()
