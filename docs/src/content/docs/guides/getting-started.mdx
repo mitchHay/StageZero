@@ -37,6 +37,27 @@ For example, if you're wanting to use our one of our integrations with `NUnit` y
 <Tabs>
     <TabItem label="Selenium">
         ```csharp
+        using StageZero.Selenium;
+
+        namespace Your.Namespace;
+
+        [SetUpFixture]
+        public class GlobalSetup
+        {
+            [OneTimeSetUp]
+            public class BeforeEverything()
+            {
+                DriverBuilder.Register<WebDriverBuilder>();
+            }
+        }
+        ```
+    </TabItem>
+    <TabItem label="Playwright">
+        ```csharp
+        using StageZero.Playwright;
+
+        namespace Your.Namespace;
+
         [SetUpFixture]
         public class GlobalSetup
         {
