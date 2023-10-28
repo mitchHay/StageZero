@@ -1,4 +1,6 @@
-﻿namespace StageZero.IntegrationTests;
+﻿using StageZero.IntegrationTests.Helpers;
+
+namespace StageZero.IntegrationTests;
 
 // Parallelisation
 [Parallelizable(ParallelScope.All)]
@@ -38,7 +40,7 @@ public class TestBase
         // Create the driver
         Driver = DriverBuilder.Create(new WebDriverOptions
         {
-            Headless = true
+            Headless = AppSettings.Get<bool>("Headless")
         });
 
         var rootDirectory = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().LastIndexOf("src"));

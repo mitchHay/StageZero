@@ -1,6 +1,7 @@
 ﻿using Microsoft.Playwright;
 using StageZero.Web;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StageZero.Playwright;
@@ -43,10 +44,15 @@ public class WebElement : IElementWeb
 
     public async Task ClickAndHold(TimeSpan duration)
     {
-        await _locator.ClickAsync(new LocatorClickOptions
-        {
-            Delay = duration.Milliseconds
-        });
+        var boundingBox = await _locator.BoundingBoxAsync();
+
+        await _page.Mouse.MoveAsync(boundingBox.X, boundingBox.Y);
+        await _page.Mouse.DownAsync();
+
+        // Emulate a hold
+        await Task.Delay(duration);
+
+        await _page.Mouse.UpAsync();
     }
 
     public async Task DoubleClick()
@@ -64,9 +70,30 @@ public class WebElement : IElementWeb
         return await _locator.GetAttributeAsync(attributeName);
     }
 
-    public Task PressKeys(Keys keys)
+    public async Task PressKeys(Keys keys)
     {
-        throw new NotImplementedException();
+        var keysToPress = new List<string>();
+        foreach (Keys key in Enum.GetValues(keys.GetType()))
+        {
+            if (!keys.HasFlag(key) || keysToPress.Contains(key.ToString()))
+            {
+                continue;
+            }
+
+            keysToPress.Add(key.ToString());
+        }
+
+        // Press the keys
+        foreach (var keyToPress in keysToPress)
+        {
+            await _page.Keyboard.DownAsync(keyToPress);
+        }
+
+        // Release the keys
+        foreach (var keyToRelease in keysToPress)
+        {
+            await _page.Keyboard.UpAsync(keyToRelease);
+        }
     }
 
     public async Task RightClick()
