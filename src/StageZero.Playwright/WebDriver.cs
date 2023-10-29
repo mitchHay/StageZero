@@ -66,8 +66,30 @@ public class WebDriver : IDriverWeb
         switch (options.Browser)
         {
             case Browser.Chrome:
-                var browser = await _playwright.Chromium.LaunchAsync(launchOptions);
-                _browserContext = await browser.NewContextAsync(contextOptions);
+                launchOptions.Channel = "chrome";
+
+                var chromeBrowser = await _playwright.Chromium.LaunchAsync(launchOptions);
+                _browserContext = await chromeBrowser.NewContextAsync(contextOptions);
+                _page = await _browserContext.NewPageAsync();
+
+                break;
+            case Browser.Firefox:
+                var firefoxBrowser = await _playwright.Firefox.LaunchAsync(launchOptions);
+                _browserContext = await firefoxBrowser.NewContextAsync(contextOptions);
+                _page = await _browserContext.NewPageAsync();
+
+                break;
+            case Browser.Safari:
+                var safariBrowser = await _playwright.Webkit.LaunchAsync(launchOptions);
+                _browserContext = await safariBrowser.NewContextAsync(contextOptions);
+                _page = await _browserContext.NewPageAsync();
+
+                break;
+            case Browser.Edge:
+                launchOptions.Channel = "msedge";
+
+                var edgeBrowser = await _playwright.Chromium.LaunchAsync(launchOptions);
+                _browserContext = await edgeBrowser.NewContextAsync(contextOptions);
                 _page = await _browserContext.NewPageAsync();
 
                 break;
