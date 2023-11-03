@@ -24,7 +24,7 @@ jobs:
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@v1
       with:
-        chrome-version: latest
+        chrome-version: stable
     - name: Wrap Chrome
       run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
     - name: Setup .NET
@@ -37,15 +37,21 @@ jobs:
     - name: Build
       run: dotnet build ./src/StageZero.sln --no-restore
     # TEST
-    - name: Chrome output
+    - name: Get Chrome version
+      run: chmod +x ./build/get_chrome_version.sh && ./build/get_chrome_version.sh
+    # SETUP SELENIUM (GUARANTEES DRIVER / BROWSER PARITY)
+    - name: Setup Selenium
       run: |
-        echo "Chrome location:" $(which chrome) \
-        echo "" \
-        echo "Chrome version:" $(which chrome --version)
+        sudo rm -f /usr/bin/chromedriver && \
+        ./src/StageZero.Selenium/bin/Debug/netstandard2.1/selenium-manager/linux/selenium-manager \
+          --driver chromedriver \
+          --driver-version ${{ env.CHROME_VERSION }} \
+          --browser chrome \
+          --browser-path $(which chrome) \
+          --debug \
+          --trace
     - name: Test
-      run: | 
-        SE_BROWSER_PATH=$(which chrome) \
-        SE_BROWSER_VERSION=$(which chrome --version) \
+      run: |
         dotnet test ./src/StageZero.sln --no-restore \
           /p:CollectCoverage=true \
           /p:CoverletOutput="../coverage/" \
