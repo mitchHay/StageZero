@@ -24,7 +24,7 @@ jobs:
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@v1
       with:
-        chrome-version: stable
+        chrome-version: latest
     - name: Wrap Chrome
       run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
     - name: Setup .NET
