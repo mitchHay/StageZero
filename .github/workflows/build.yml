@@ -37,9 +37,15 @@ jobs:
     - name: Build
       run: dotnet build ./src/StageZero.sln --no-restore
     # TEST
+    - name: Chrome output
+      run: |
+        echo "Chrome location:" $(which chrome) \
+        echo "" \
+        echo "Chrome version:" $(which chrome --version)
     - name: Test
       run: | 
         SE_BROWSER_PATH=$(which chrome) \
+        SE_BROWSER_VERSION=$(which chrome --version) \
         dotnet test ./src/StageZero.sln --no-restore \
           /p:CollectCoverage=true \
           /p:CoverletOutput="../coverage/" \
