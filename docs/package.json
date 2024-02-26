@@ -10,11 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.19.0",
-    "astro": "^4.2.1",
+    "@astrojs/starlight": "^0.20.1",
+    "astro": "^4.4.4",
     "sharp": "^0.33.2"
   },
   "devDependencies": {
-    "sass": "^1.71.0"
+    "sass": "^1.71.1"
   }
 }
