@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import seleniumLogo from "../../../public/images/selenium-logo.png";
+import playwrightLogo from "../../../public/images/playwright-logo.png";
+
+const seleniumLink = "https://www.selenium.dev";
+---
+
+<div class="supported-drivers">
+  <a class="driver" href={seleniumLink} target="_blank">
+    <Image src={seleniumLogo} alt="Selenium WebDriver" class="driver-image" />
+    <p>Selenium</p>
+  </a>
+  <a class="driver" href="" target="_blank">
+    <Image src={playwrightLogo} alt="Playwright" class="driver-image" />
+    <p>Playwright</p>
+  </a>
+</div>
+
+<style lang="scss">
+  .supported-drivers {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 24px;
+    padding: 24px 16px;
+
+    .driver {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0 !important;
+      color: var(--sl-color-text);
+      text-decoration: none;
+
+      .driver-image {
+        max-width: 64px;
+        height: 64px;
+        object-fit: contain;
+      }
+
+      > p {
+        line-height: 100%;
+      }
+    }
+  }
+</style>
