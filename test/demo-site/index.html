@@ -1,192 +1,192 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Base styles -->
-    <style>
-      .main {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 0 1rem;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Base styles -->
+  <style>
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    section>h2 {
+      margin-bottom: 0;
+    }
+
+    section>* {
+      width: fit-content;
+    }
+
+    .alert {
+      padding: 4px 12px;
+      border: 2px solid #AAAAAA;
+      border-radius: 4px;
+      background-color: #F4F4F4;
+      visibility: hidden;
+      height: 0px;
+    }
+
+    .alert #alert-text {
+      color: #333333;
+    }
+
+    .test-drag {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .test-drag .drop-target {
+      width: 100px;
+      height: 50px;
+      text-align: center;
+      border: 2px solid red;
+      border-radius: 4px;
+    }
+
+    .drop-target.dropped {
+      border-color: #228C22;
+    }
+
+    .drop-target #drag-target:hover {
+      cursor: grab;
+    }
+
+    .test-menu {
+      height: 100px;
+      width: 100%;
+      background-color: #F4F4F4;
+      border: 1px solid #AAAAAA;
+      border-radius: 4px;
+    }
+
+    .test-menu.scroll {
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+    .test-menu.scroll > #test-menu-success {
+      margin-top: 200px;
+    }
+  </style>
+
+  <script>
+    let clickCount = 0;
+    function onClick(event) {
+      clickCount += 1;
+      event.target.innerText = `Clicked ${clickCount} times!`;
+    }
+
+    // Drag events
+    // Adapted from W3Schools
+    // Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_ondrag
+    function drop(event) {
+      const data = event.dataTransfer.getData("Text");
+      const target = event.target;
+
+      target.appendChild(document.getElementById(data));
+      target.classList.add("dropped");
+    }
+
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function dragStart(event) {
+      event.target.parentElement.classList.remove("dropped");
+      event.dataTransfer.setData("Text", event.target.id);
+    }
+
+    // Key combos
+    document.onkeydown = (event) => {
+      if (event.ctrlKey && event.keyCode == 66) {
+        const alertElement = document.getElementById("alert");
+        const alertTextElement = document.getElementById("alert-text");
+
+        alertElement.style.visibility = "visible";
+        alertElement.style.height = "auto";
+        alertTextElement.innerText = "CTRL + B DETECTED!";
       }
+    };
 
-      section {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
+    // Context menu
+    function onContextClick(event) {
+      event.preventDefault();
 
-      section > h2 {
-        margin-bottom: 0;
-      }
+      document.getElementById("test-menu-success").innerText = "Right click successful!";
+    }
 
-      section > * {
-        width: fit-content;
-      }
+    // Hold
+    let mouseDownTimer;
+    function onMouseHold(event) {
+      mouseDownTimer = setTimeout(() => {
+        event.target.innerText = "Held successfully!";
+      }, 1000);
+    }
 
-      .alert {
-        padding: 4px 12px;
-        border: 2px solid #AAAAAA;
-        border-radius: 4px;
-        background-color: #F4F4F4;
-        visibility: hidden;
-        height: 0px;
-      }
+    document.addEventListener("click", () => clearTimeout(mouseDownTimer));
+  </script>
+</head>
 
-      .alert #alert-text {
-        color: #333333;
-      }
+<body>
+  <main class="main">
+    <h1>StageZero Integration Test Site</h1>
 
-      .test-drag {
-        display: flex;
-        gap: 1rem;
-      }
+    <div class="alert" id="alert">
+      <p id="alert-text"></p>
+    </div>
 
-      .test-drag .drop-target {
-        width: 100px;
-        height: 50px;
-        text-align: center;
-        border: 2px solid red;
-        border-radius: 4px;
-      }
+    <section>
+      <h2>Interactive Elements</h2>
+      <input id="test-input" placeholder="Type text" type="text" />
 
-      .drop-target.dropped {
-        border-color: #228C22;
-      }
+      <button id="test-button" onclick="onClick(event)">
+        Click me!
+      </button>
 
-      .drop-target #drag-target:hover {
-        cursor: grab;
-      }
+      <button id="test-button-hold" onmousedown="onMouseHold(event)">
+        Hold me!
+      </button>
 
-      .test-menu {
-        height: 100px;
-        width: 100px;
-        background-color: #F4F4F4;
-        border: 1px solid #AAAAAA;
-        border-radius: 4px;
-      }
-    </style>
-
-    <script>
-      let clickCount = 0;
-      function onClick(event) {
-        clickCount += 1;
-        event.target.innerText = `Clicked ${clickCount} times!`;
-      }
-
-      // Drag events
-      // Adapted from W3Schools
-      // Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_ondrag
-      function drop(event) {
-        const data = event.dataTransfer.getData("Text");
-        const target = event.target;
-
-        target.appendChild(document.getElementById(data));
-        target.classList.add("dropped");
-      }
-
-      function allowDrop(event) {
-        event.preventDefault();
-      }
-
-      function dragStart(event) {
-        event.target.parentElement.classList.remove("dropped");
-        event.dataTransfer.setData("Text", event.target.id);
-      }
-
-      // Key combos
-      document.onkeydown = (event) => {
-        if (event.ctrlKey && event.keyCode == 66) {
-          const alertElement = document.getElementById("alert");
-          const alertTextElement = document.getElementById("alert-text");
-
-          alertElement.style.visibility = "visible";
-          alertElement.style.height = "auto";
-          alertTextElement.innerText = "CTRL + B DETECTED!";
-        }
-      };
-
-      // Context menu
-      function onContextClick(event) {
-        event.preventDefault();
-
-        document.getElementById("test-menu-success").innerText = "Right click successful!";
-      }
-
-      // Hold
-      let mouseDownTimer;
-      function onMouseHold(event) {
-        mouseDownTimer = setTimeout(() => {
-          event.target.innerText = "Held successfully!";
-        }, 1000);
-      }
-
-      document.addEventListener("click", () => clearTimeout(mouseDownTimer));
-    </script>
-  </head>
-  <body>
-    <main class="main">
-      <h1>StageZero Integration Test Site</h1>
-
-      <div class="alert" id="alert">
-        <p id="alert-text"></p>
+      <div class="test-drag">
+        <div class="drop-target" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p ondragstart="dragStart(event)" draggable="true" id="drag-target">
+            Drag me!
+          </p>
+        </div>
+        <div class="drop-target" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
       </div>
 
-      <section>
-        <h2>Interactive Elements</h2>
-        <input id="test-input" 
-               placeholder="Type text" 
-               type="text" />
-
-        <button id="test-button" 
-                onclick="onClick(event)"
-        >
-          Click me!
-        </button>
-        
-        <button id="test-button-hold"
-                onmousedown="onMouseHold(event)"
-        >
-          Hold me!
-        </button>
-
-        <div class="test-drag">
-          <div class="drop-target" 
-               ondrop="drop(event)"
-               ondragover="allowDrop(event)"
-          >
-            <p ondragstart="dragStart(event)" 
-               draggable="true"
-               id="drag-target"
-            >
-               Drag me!
-            </p>
-          </div>
-          <div class="drop-target" 
-               ondrop="drop(event)"
-               ondragover="allowDrop(event)"
-          ></div>
+      <div>
+        <p>Right click the box below!</p>
+        <div class="test-menu" id="test-menu" oncontextmenu="onContextClick(event)">
+          <span id="test-menu-success"></span>
         </div>
+      </div>
 
-        <div>
-          <p>Right click the box below!</p>
-          <div class="test-menu"
-               id="test-menu"
-               oncontextmenu="onContextClick(event)"
-          >
-            <span id="test-menu-success"></span>
-          </div>
+      <div>
+        <p>Scroll inside the box below!</p>
+        <div class="test-menu scroll" id="test-scroll">
+          <p id="test-scroll-success">Scrolled successfully!</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section>
-        <h2>Attributes</h2>
-        <div class="test-class">Element with class</div>
-        <div id="test-id">Element with id</div>
-        <test-tag id="test-tag">Element with tag</test-tag>
-      </section>
-    </main>
-  </body>
+    <section>
+      <h2>Attributes</h2>
+      <div class="test-class">Element with class</div>
+      <div id="test-id">Element with id</div>
+      <test-tag id="test-tag">Element with tag</test-tag>
+    </section>
+  </main>
+</body>
+
 </html>

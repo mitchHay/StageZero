@@ -22,13 +22,6 @@ public interface IDriverWeb : IDriver
     Task<IElementWeb> GetElement(string cssSelector);
 
     /// <summary>
-    /// Scroll to and get the specified element
-    /// </summary>
-    /// <param name="cssSelector">The element to scroll to</param>
-    /// <returns>The targeted <see cref="IElementWeb"/> instance.</returns>
-    Task<IElementWeb> ScrollToElement(string cssSelector);
-
-    /// <summary>
     /// Invoke a browser level navigation event
     /// </summary>
     /// <returns>A new <see cref="INavigate"/> instance.</returns>

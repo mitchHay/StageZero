@@ -91,5 +91,13 @@ public class ElementTests : TestBase
         var testTagElement = await Driver.GetElement("#test-tag");
         return testTagElement.Tag;
     }
-}
 
+    [Test]
+    public async Task CanScroll()
+    {
+        var scrollToContainer = await Driver.GetElement("#test-scroll");
+        var scrollToElement = await scrollToContainer.ScrollTo("#test-scroll-success");
+
+        Assert.That(scrollToElement, Is.Not.Null);
+    }
+}

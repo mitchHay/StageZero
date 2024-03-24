@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using StageZero.Selenium.Extensions;
 using StageZero.Web;
 using System;
 using System.Text.RegularExpressions;
@@ -105,6 +106,23 @@ public class WebElement : IElementWeb
     public Task<string> GetAttributeValue(string attributeName)
     {
         return Task.Run(() => _element.GetAttribute(attributeName));
+    }
+
+    /// <inheritdoc/>
+    public Task<IElementWeb> ScrollTo(string cssSelector)
+    {
+        return Task.Run(async () =>
+        {
+            var scrollToElement = await _driver.GetElement(cssSelector);
+            
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "arguments[0].scrollTop = arguments[1].offsetTop",
+                _element,
+                scrollToElement
+            );
+
+            return (IElementWeb)new WebElement(_driver, scrollToElement);
+        });
     }
 
     private void InvokeActionOnKey(Web.Keys keys, Action<Web.Keys> actionToInvoke)
