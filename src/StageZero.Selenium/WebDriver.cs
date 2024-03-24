@@ -1,12 +1,7 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using StageZero.Selenium.Browser;
+using StageZero.Selenium.Extensions;
 using StageZero.Web;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StageZero.Selenium;
@@ -21,7 +16,6 @@ public class WebDriver : IDriverWeb
 
 
     private readonly IWebDriver _seleniumDriver;
-    private readonly WebDriverWait _webDriverWait;
 
     public WebDriver(WebDriverOptions options)
     {
@@ -29,8 +23,6 @@ public class WebDriver : IDriverWeb
             .New
             .Build(options)
             .CreateWebDriver();
-
-        _webDriverWait = new WebDriverWait(_seleniumDriver, TimeSpan.FromSeconds(5));
     }
 
     /// <inheritdoc/>
@@ -38,18 +30,8 @@ public class WebDriver : IDriverWeb
     {
         return Task.Run(async () =>
         {
-            var element = await GetSeleniumElement(cssSelector);
+            var element = await _seleniumDriver.GetElement(cssSelector);
             return (IElementWeb)new WebElement(_seleniumDriver, element);
-        });
-    }
-
-    /// <inheritdoc/>
-    public Task<IElementWeb> ScrollToElement(string cssSelector)
-    {
-        return Task.Run(async () =>
-        {
-            await PerformScroll(cssSelector);
-            return await GetElement(cssSelector);
         });
     }
 
@@ -84,24 +66,6 @@ public class WebDriver : IDriverWeb
         {
             _seleniumDriver.Close();
             _seleniumDriver.Quit();
-        });
-    }
-
-    private Task<IWebElement> GetSeleniumElement(string cssSelector)
-    {
-        return Task.Run(() => 
-            _webDriverWait.Until(driver => driver.FindElement(By.CssSelector(cssSelector)))
-        );
-    }
-
-    private Task PerformScroll(string scrollToElementSelector)
-    {
-        return Task.Run(async () =>
-        {
-            var scrollToElement = await GetSeleniumElement(scrollToElementSelector);
-            new Actions(_seleniumDriver)
-                .ScrollToElement(scrollToElement)
-                .Perform();
         });
     }
 }

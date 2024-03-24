@@ -105,11 +105,13 @@ public class WebDriver : IDriverWeb
         });
     }
 
+    /// <inheritdoc/>
     public IDocument Document()
     {
         return new Document(_page);
     }
 
+    /// <inheritdoc/>
     public Task<IElementWeb> GetElement(string cssSelector)
     {
         return Task.Run(() =>
@@ -119,21 +121,19 @@ public class WebDriver : IDriverWeb
         });
     }
 
+    /// <inheritdoc/>
     public INavigate Navigate()
     {
         return new PlaywrightNavigate(_page);
     }
 
+    /// <inheritdoc/>
     public async Task Refresh()
     {
         await _page.ReloadAsync();
     }
 
-    public Task<IElementWeb> ScrollToElement(string cssSelector)
-    {
-        throw new System.NotImplementedException();
-    }
-
+    /// <inheritdoc/>
     public async Task Terminate()
     {
         var dateTime = DateTime.Now;
@@ -146,6 +146,7 @@ public class WebDriver : IDriverWeb
         _playwright.Dispose();
     }
 
+    /// <inheritdoc/>
     public IWindow Window()
     {
         return new Window(_page);

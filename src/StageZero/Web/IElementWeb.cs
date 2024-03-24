@@ -53,4 +53,11 @@ public interface IElementWeb : IElement
     /// <param name="attributeName">The HTML attribute name</param>
     /// <returns>The value of the HTML attribute</returns>
     public Task<string> GetAttributeValue(string attributeName);
+
+    /// <summary>
+    /// Scroll to and get the specified element
+    /// </summary>
+    /// <param name="cssSelector">The element to scroll to</param>
+    /// <returns>The targeted <see cref="IElementWeb"/> instance.</returns>
+    public Task<IElementWeb> ScrollTo(string cssSelector);
 }

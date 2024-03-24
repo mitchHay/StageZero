@@ -12,6 +12,7 @@ public class WebElement : IElementWeb
     private readonly string _cssSelector;
     private readonly IPage _page;
 
+    /// <inheritdoc/>
     public string ClassName
     {
         get
@@ -21,6 +22,7 @@ public class WebElement : IElementWeb
         }
     }
 
+    /// <inheritdoc/>
     public string Id
     {
         get
@@ -30,6 +32,7 @@ public class WebElement : IElementWeb
         }
     }
 
+    /// <inheritdoc/>
     public string Tag 
     { 
         get
@@ -42,6 +45,7 @@ public class WebElement : IElementWeb
         } 
     }
 
+    /// <inheritdoc/>
     public string Text
     {
         get
@@ -58,11 +62,13 @@ public class WebElement : IElementWeb
         _page = page;
     }
 
+    /// <inheritdoc/>
     public async Task Click()
     {
         await _locator.ClickAsync();
     }
 
+    /// <inheritdoc/>
     public async Task ClickAndHold(TimeSpan duration)
     {
         var boundingBox = await _locator.BoundingBoxAsync();
@@ -76,11 +82,13 @@ public class WebElement : IElementWeb
         await _page.Mouse.UpAsync();
     }
 
+    /// <inheritdoc/>
     public async Task DoubleClick()
     {
         await _locator.DblClickAsync();
     }
 
+    /// <inheritdoc/>
     public async Task<string> GetAttributeValue(string attributeName)
     {
         if (attributeName == "value")
@@ -91,6 +99,7 @@ public class WebElement : IElementWeb
         return await _locator.GetAttributeAsync(attributeName);
     }
 
+    /// <inheritdoc/>
     public async Task PressKeys(Keys keys)
     {
         var keysToPress = new List<string>();
@@ -107,6 +116,7 @@ public class WebElement : IElementWeb
         await _locator.PressAsync(string.Join("+", keysToPress));
     }
 
+    /// <inheritdoc/>
     public async Task RightClick()
     {
         await _locator.ClickAsync(new LocatorClickOptions
@@ -115,8 +125,18 @@ public class WebElement : IElementWeb
         });
     }
 
+    /// <inheritdoc/>
     public async Task Type(string text)
     {
         await _locator.FillAsync(text);
+    }
+
+    /// <inheritdoc/>
+    public async Task<IElementWeb> ScrollTo(string cssSelector)
+    {
+        var scrollToElement = _locator.Locator(cssSelector);
+        await scrollToElement.ScrollIntoViewIfNeededAsync();
+
+        return new WebElement(scrollToElement, _page, cssSelector);
     }
 }
