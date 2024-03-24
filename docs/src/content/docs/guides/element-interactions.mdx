@@ -52,7 +52,8 @@ await elementToHold.ClickAndHold(timeToHold);
 ### Scrolling to an element
 
 ```csharp
-var scrolledToElement = await Driver.ScrollToElement("#scrolled-to-element");
+var scrollContainer = await Driver.GetElement("#scroll-container");
+var scrolledToElement = await scrollContainer.ScrollTo("#scrolled-to-element");
 ```
 
 ### Keyboard shortcuts
