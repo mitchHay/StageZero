@@ -33,6 +33,16 @@ public class WebElement : IElementWeb
     }
 
     /// <inheritdoc/>
+    public bool IsDisplayed
+    {
+        get
+        {
+            _locator.IsDisabledAsync().Wait();
+            return _locator.IsDisabledAsync().Result;
+        }
+    }
+
+    /// <inheritdoc/>
     public string Tag 
     { 
         get
