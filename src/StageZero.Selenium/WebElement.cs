@@ -27,6 +27,9 @@ public class WebElement : IElementWeb
     /// <inheritdoc/>
     public string Text => _element.Text;
 
+    /// <inheritdoc/>
+    public bool IsDisplayed => _element.Displayed;
+
     public WebElement(IWebDriver driver, IWebElement element)
     {
         _driver = driver;
