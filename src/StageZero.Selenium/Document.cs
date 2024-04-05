@@ -16,13 +16,13 @@ public sealed class Document : IDocument
     }
 
     /// <inheritdoc/>
-    public Task ExecuteJavaScript(string script)
+    public Task ExecuteJavaScript(string script, params object[] args)
     {
-        return Task.Run(() => _jsExecutor.ExecuteScript(script));
+        return Task.Run(() => _jsExecutor.ExecuteScript(script, args));
     }
 
     /// <inheritdoc/>
-    public Task<TResult> ExecuteJavaScript<TResult>(string script)
+    public Task<TResult> ExecuteJavaScript<TResult>(string script, params object[] args)
     {
         return Task.Run(async () =>
         {
@@ -35,7 +35,7 @@ public sealed class Document : IDocument
                 return (TResult)webElement;
             }
 
-            return (TResult)_jsExecutor.ExecuteScript(script);
+            return (TResult)_jsExecutor.ExecuteScript(script, args);
         });
     }
 

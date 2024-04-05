@@ -1,0 +1,23 @@
+---
+title: Executing JavaScript
+description: A guide detailing how to execute JavaScript using StageZero's test driver.
+sidebar:
+    order: 4
+---
+
+Sometimes it's neccessary to execute JavaScript directly in the browser from your tests. 
+`StageZero` supplies a variety of utility commands to achieve this across our support WebDrivers.
+
+## Running JavaScript
+
+```csharp title="Test.cs"
+var js = "console.log('Hello world!');";
+await driver.Document().ExecuteJavaScript(js);
+```
+
+## Retrieving an object using JavaScript
+
+```csharp title="Test.cs"
+var js = "return document.location.href;";
+var href = await driver.Document().ExecuteJavaScript<string>(js);
+```

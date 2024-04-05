@@ -14,13 +14,15 @@ public interface IDocument
     /// Execute JavaScript in the current window
     /// </summary>
     /// <param name="script">The JavaScript to execute</param>
-    public Task ExecuteJavaScript(string script);
+    /// <param name="args">The arguments to provide the script</param>
+    public Task ExecuteJavaScript(string script, params object[] args);
 
     /// <summary>
     /// Execute JavaScript in the current window
     /// </summary>
     /// <typeparam name="TResult">The type of object being returned from the provided JavaScript</typeparam>
     /// <param name="script">The JavaScript to execute</param>
+    /// <param name="args">The arguments to provide the script</param>
     /// <returns>The desired object</returns>
-    public Task<TResult> ExecuteJavaScript<TResult>(string script);
+    public Task<TResult> ExecuteJavaScript<TResult>(string script, params object[] args);
 }

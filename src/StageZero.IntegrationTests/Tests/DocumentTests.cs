@@ -10,15 +10,12 @@ public class DocumentTests : TestBase
     [Test]
     public async Task CanExecuteJs()
     {
-        if (Driver.GetType() == typeof(Playwright.WebDriver))
-        {
-            Assert.Ignore($"Playwright JS execution still needs to be fleshed out. Skipping {nameof(CanExecuteJs)} for now.");
-        }
-
         // Wait for the page to navigate
         await Task.Delay(250);
 
-        var inputElementByJs = await Driver.Document().ExecuteJavaScript<IElementWeb>("return document.getElementById('test-input')");
-        Assert.That(inputElementByJs, Is.Not.Null);
+        var js = "return document.location.href;";
+        var href = await Driver.Document().ExecuteJavaScript<string>(js);
+        Assert.That(href, Is.Not.Null);
+        Assert.That(href, Is.Not.Empty);
     }
 }
