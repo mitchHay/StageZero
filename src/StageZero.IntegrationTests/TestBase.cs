@@ -16,6 +16,8 @@ public class TestBase
 
     public string? TestSitePath { get; private set; }
 
+    public bool Headless => AppSettings.Get<bool>("Headless");
+
     private readonly Type _driverBuilderType;
 
     public TestBase(Type driverBuilderType)
@@ -40,7 +42,7 @@ public class TestBase
         // Create the driver
         Driver = DriverBuilder.Create(new WebDriverOptions
         {
-            Headless = AppSettings.Get<bool>("Headless")
+            Headless = Headless
         });
 
         var rootDirectory = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().LastIndexOf("src"));
