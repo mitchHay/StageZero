@@ -24,7 +24,7 @@ public class SeleniumAlert : IAlert
             }
             catch
             {
-                Console.WriteLine("Something went wrong interacting with requested alert element. Perhaps it's already closed?");
+                Console.WriteLine("Something went wrong interacting with the requested alert element. Perhaps it's already closed?");
                 return string.Empty;
             }
         }
@@ -40,7 +40,7 @@ public class SeleniumAlert : IAlert
             } 
             catch
             {
-                Console.WriteLine("Something went wrong interacting with requested alert element. Perhaps it's already closed?");
+                Console.WriteLine("Something went wrong interacting with the requested alert element. Perhaps it's already closed?");
             }
         });
     }
@@ -55,7 +55,7 @@ public class SeleniumAlert : IAlert
             }
             catch
             {
-                Console.WriteLine("Something went wrong interacting with requested alert element. Perhaps it's already closed?");
+                Console.WriteLine("Something went wrong interacting with the requested alert element. Perhaps it's already closed?");
             }
         });
     }

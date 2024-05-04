@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using System;
 using System.Collections.Generic;
 
 namespace StageZero.Selenium.Browser.Implementations;
@@ -18,7 +19,7 @@ internal class FirefoxBrowserDriver : BrowserDriver
 
         if (!string.IsNullOrEmpty(Options.EmulatedDeviceName))
         {
-#warning Mobile emulation is not supported in Firefox, please consider using an alternative supported browser (e.g. Chrome or Edge)
+            Console.WriteLine("Mobile emulation is not supported in Firefox, please consider using an alternative supported browser (e.g. Chrome or Edge)");
         }
 
         firefoxOptions.AddArguments(arguments);
