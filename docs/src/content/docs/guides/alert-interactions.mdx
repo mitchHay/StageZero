@@ -1,0 +1,52 @@
+---
+title: Interacting with Alerts
+description: A guide detailing how to interact with Web alerts using StageZero's test driver.
+sidebar:
+    order: 4
+---
+
+`StageZero` follows a similar approach to interacting with alerts to the likes of [Playwright](https://playwright.dev/dotnet/docs/dialogs) and [Puppeteer](https://pptr.dev/api/puppeteer.dialog). You can subscribe to the `OnAlert` event listener
+available in the `IDriverWeb` object. This allows you to have clear, concise alert handling and reduces the requirement for having to wait for an alert to appear in the browser.
+
+## Usage
+
+```csharp
+var driver = DriverBuilder.Create(new WebDriverOptions());
+driver.OnAlert += async (_, alert) => 
+{
+    // Handle any alert based actions here.
+};
+```
+
+> ⚠️ **Precautions**
+>
+> You must ensure that you handle the alert directly in the `OnAlert` event handler. If you do not call either `Dismiss` or `Confirm` your tests **will** hang.
+
+### Confirming an alert
+
+
+```csharp
+driver.OnAlert += async (_, alert) => 
+{
+    await alert.Confirm();
+};
+```
+
+### Dismissing an alert
+
+```csharp
+driver.OnAlert += async (_, alert) => 
+{
+    await alert.Dismiss();
+};
+```
+
+### Getting alert text
+
+```csharp
+driver.OnAlert += async (_, alert) =>
+{
+    Console.WriteLine(alert.Message);
+    await alert.Dismiss();
+}
+```
