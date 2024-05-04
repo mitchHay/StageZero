@@ -48,4 +48,14 @@ public interface IDriverWeb : IDriver
     /// Terminate the current <see cref="IDriverWeb"/> instance.
     /// </summary>
     public Task Terminate();
+
+    /// <summary>
+    /// The <see cref="OnAlert"/> delegate handler.
+    /// </summary>
+    public delegate void HandleAlert(object sender, IAlert alert);
+
+    /// <summary>
+    /// An event handler used to subscribe to alert open events in the browser.
+    /// </summary>
+    public event HandleAlert OnAlert;
 }

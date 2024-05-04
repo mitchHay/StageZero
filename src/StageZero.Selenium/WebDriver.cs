@@ -3,6 +3,7 @@ using StageZero.Selenium.Browser;
 using StageZero.Selenium.Extensions;
 using StageZero.Web;
 using System.Threading.Tasks;
+using static StageZero.Web.IDriverWeb;
 
 namespace StageZero.Selenium;
 
@@ -17,12 +18,44 @@ public class WebDriver : IDriverWeb
 
     private readonly IWebDriver _seleniumDriver;
 
+    private bool _alertOpen;
+
+    public event HandleAlert OnAlert;
+
     public WebDriver(WebDriverOptions options)
     {
         _seleniumDriver = BrowserDriverFactory
             .New
             .Build(options)
             .CreateWebDriver();
+
+        // Run in another thread
+        Task.Run(() =>
+        {
+            // Listen for alerts
+            while (true)
+            {
+                try
+                {
+                    var alert = _seleniumDriver.SwitchTo().Alert();
+                    _alertOpen = true;
+
+                    // Invoke event listener here
+                    OnAlert.Invoke(this, new SeleniumAlert(alert));
+
+                    // Switch back to the default page content
+                    _seleniumDriver.SwitchTo().DefaultContent();
+                }
+                // No alert found
+                catch (NoAlertPresentException)
+                {
+                }
+                finally
+                {
+                    _alertOpen = false;
+                }
+            }
+        });
     }
 
     /// <inheritdoc/>
@@ -62,10 +95,36 @@ public class WebDriver : IDriverWeb
     /// <inheritdoc/>
     public Task Terminate()
     {
-        return Task.Run(() =>
+        return Task.Run(async () =>
         {
-            _seleniumDriver.Close();
-            _seleniumDriver.Quit();
+            try
+            {
+                await WaitForAlertToClose();
+            } 
+            finally
+            {
+                _seleniumDriver.Close();
+                _seleniumDriver.Quit();
+            }
         });
+    }
+
+    private async Task WaitForAlertToClose()
+    {
+        var timeoutMs = 1500;
+        var maxAttempts = 5;
+        var delayIntervalMs = timeoutMs / maxAttempts;
+
+        while (_alertOpen)
+        {
+            await Task.Delay(delayIntervalMs);
+
+            if (!_alertOpen || maxAttempts <= 0)
+            {
+                break;
+            }
+
+            maxAttempts -= 1;
+        }
     }
 }

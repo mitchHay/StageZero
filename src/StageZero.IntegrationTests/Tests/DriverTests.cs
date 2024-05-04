@@ -46,4 +46,22 @@ public class DriverTests : TestBase
 
         Assert.That(string.IsNullOrEmpty(inputValue), Is.True);
     }
+
+
+    [Test]
+    public async Task CanOpenAlert() 
+    {
+        // Listen for alerts
+        Driver.OnAlert += async (_, alert) =>
+        {
+            Assert.That(alert.Message, Is.EqualTo("Alert opened!"));
+            await alert.Dismiss();
+        };
+
+        // Navigate through test
+        await Driver.Navigate().ToUrl(TestSitePath);
+
+        var alertButton = await Driver.GetElement("#test-alert-button");
+        await alertButton.Click();
+    }
 }
