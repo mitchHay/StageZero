@@ -57,7 +57,7 @@ jobs:
           /p:CoverletOutput="../coverage/" \
           /p:MergeWith="../coverage/coverage.json" \
           /p:CoverletOutputFormat=\"cobertura,json\" -m:1 \
-          --verbosity detailed
+          --verbosity normal
     # CODE COVERAGE
     - name: Generate code coverage report
       uses: irongut/CodeCoverageSummary@v1.3.0
