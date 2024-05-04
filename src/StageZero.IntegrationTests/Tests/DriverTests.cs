@@ -3,9 +3,11 @@ namespace StageZero.IntegrationTests.Tests;
 public class DriverTests : TestBase
 {
     private const string UrlToNavigate = "https://www.google.com/";
+    private readonly Type _driverBuilderType;
 
     public DriverTests(Type driverBuilderType) : base(driverBuilderType)
     {
+        _driverBuilderType = driverBuilderType;
     }
 
     [Test(ExpectedResult = true)]
@@ -51,6 +53,12 @@ public class DriverTests : TestBase
     [Test]
     public async Task CanOpenAlert() 
     {
+        // TODO: Investigate Github actions issues running Selenium alert tests in headless mode.
+        if (_driverBuilderType == typeof(Selenium.WebDriverBuilder) && Headless)
+        {
+            Assert.Ignore("Selenium currently has issues interacting with alerts in headless Chrome within Github actions. Skipping...");
+        }
+
         // Listen for alerts
         Driver.OnAlert += async (_, alert) =>
         {
