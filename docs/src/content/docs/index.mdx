@@ -19,6 +19,7 @@ hero:
 ---
 
 import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import Disclaimer from '../../components/disclaimer/Disclaimer.astro';
 import Footer from '../../components/footer/Footer.astro';
 import SupportedDrivers from '../../components/supported-drivers/SupportedDrivers.astro';
 
@@ -41,21 +42,23 @@ Want to cut straight to the chase? Here are some of the main reasons to start us
 		StageZero is all about focusing on what matters, your tests! Focus on test creation, rather than writing and maintaining logic to steer the browser.
 	</Card>
 	<Card title="Write tests once" icon="puzzle">
-		Build your tests with confidence. You can migrate to and from an integration of your choosing (e.g. Selenium -> Playwright) with only one line of code. Your tests will always work. Your code won't change.
+		Build your tests with confidence. You can migrate to and from an integration of your choosing with ease. We don't punish you for changing WebDriver technology.*
 	</Card>
   <Card title="Minimal setup" icon="document">
-      Register your desired integration with our `DriverBuilder` and away you go. No more creating or maintaining separate framework code. StageZero allows you to focus on test creation, rather than browser interaction.
+    Register your desired integration with our `DriverBuilder` and away you go. No more creating or maintaining separate framework code. 
   </Card>
   <Card title="Streamlined interactions" icon="random">
-      It's never been easier to interact with elements. Execute a variety of actions with the call of a method.
+    It's never been easier to interact with elements. Execute a variety of actions with the call of a method.
   </Card>
   <Card title="Simple configuration" icon="setting">
-      Use one configuration across many integrations. You only need to deal with our `DriverOptions` in order to change test driver behaviours. We handle the rest.
+    Control any desired WebDriver behaviours (e.g. headless mode) with our `DriverOptions` configuration. We handle the rest.
   </Card>
   <Card title="Rock solid" icon="rocket">
-      All supported integrations are built with stability and parallelism in mind. Feel comfortable knowing you're on strong foundations.
+    All supported integrations are built with stability and parallelism in mind. Feel comfortable knowing you're on strong foundations.
   </Card>
 </CardGrid>
+
+<Disclaimer />
 
 <Footer />
 

@@ -24,6 +24,7 @@ html {
 .action {
   padding: pxToRem(8) pxToRem(18);
   transition: all .125s ease-in-out;
+  line-height: 100%;
 
   &.primary {
     background-color: var(--sl-color-accent);

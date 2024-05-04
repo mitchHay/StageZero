@@ -2,6 +2,7 @@
 using StageZero.Web;
 using System;
 using System.Threading.Tasks;
+using static StageZero.Web.IDriverWeb;
 
 namespace StageZero.Playwright;
 
@@ -17,6 +18,8 @@ public class WebDriver : IDriverWeb
     private int _maxInitTries = 2;
 
     private readonly object lockObj = new();
+
+    public event HandleAlert OnAlert;
 
     public WebDriver(WebDriverOptions options)
     {
@@ -97,6 +100,11 @@ public class WebDriver : IDriverWeb
                 throw new NotSupportedException($"Sorry! Looks like the {options.Browser} isn't supported yet :/ - Feel free to check our github for updates!");
         }
 
+        _page.Dialog += (_, dialog) => 
+        {
+            OnAlert.Invoke(this, new PlaywrightAlert(dialog));
+        };
+
         await _browserContext.Tracing.StartAsync(new TracingStartOptions
         {
             Screenshots = true,
@@ -150,5 +158,11 @@ public class WebDriver : IDriverWeb
     public IWindow Window()
     {
         return new Window(_page);
+    }
+    
+    /// <inheritdoc/>
+    public INavigateContext SwitchContext()
+    {
+        throw new NotImplementedException();
     }
 }
