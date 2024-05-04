@@ -46,7 +46,6 @@ public class WebDriver : IDriverWeb
                     // Switch back to the default page content
                     _seleniumDriver.SwitchTo().DefaultContent();
                 }
-                // No alert found
                 catch (NoAlertPresentException)
                 {
                 }
