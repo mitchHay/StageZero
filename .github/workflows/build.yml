@@ -91,7 +91,7 @@ jobs:
           reporttypes: "Html_Dark"
           tag: "${{ env.GitVersion_NuGetVersionV2 }}"
       - name: Upload coverage report artifact
-        uses: actions/upload-artifact@v2.2.3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
           name: HTML Coverage Report
