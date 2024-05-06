@@ -32,10 +32,10 @@ jobs:
       - name: Version site
         run: cd ${{ github.workspace }}/docs && npm version ${{ env.GitVersion_NuGetVersionV2 }}
       - name: Install, build, and upload your site
-        uses: withastro/action@v0
+        uses: withastro/action@v2
         with:
           path: ./docs
-          node-version: 18
+          node-version: 20
 
   deploy:
     if: github.ref == 'refs/heads/main'
