@@ -2,9 +2,9 @@ name: Run build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -17,85 +17,85 @@ jobs:
       contents: write
 
     steps:
-    # SETUP
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Setup Chrome
-      uses: browser-actions/setup-chrome@v1
-      with:
-        chrome-version: stable
-    - name: Wrap Chrome
-      run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    # BUILD
-    - name: Restore dependencies
-      run: dotnet restore ./src/StageZero.sln
-    - name: Build
-      run: dotnet build ./src/StageZero.sln --no-restore
-    # TEST
-    - name: Get Chrome version
-      run: chmod +x ./build/get_chrome_version.sh && ./build/get_chrome_version.sh
-    # SETUP SELENIUM (GUARANTEES DRIVER / BROWSER PARITY)
-    - name: Setup Selenium
-      run: |
-        sudo rm -f /usr/bin/chromedriver && \
-        ./src/StageZero.Selenium/bin/Debug/netstandard2.1/selenium-manager/linux/selenium-manager \
-          --driver chromedriver \
-          --driver-version ${{ env.CHROME_VERSION }} \
-          --browser chrome \
-          --browser-path $(which chrome) \
-          --debug \
-          --trace
-    - name: Test
-      run: |
-        dotnet test ./src/StageZero.sln --no-restore \
-          /p:CollectCoverage=true \
-          /p:CoverletOutput="../coverage/" \
-          /p:MergeWith="../coverage/coverage.json" \
-          /p:CoverletOutputFormat=\"cobertura,json\" -m:1 \
-          --verbosity normal
-    # CODE COVERAGE
-    - name: Generate code coverage report
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: /src/coverage/coverage.cobertura.xml
-        badge: true
-        format: markdown
-        output: both
-    - name: Add code coverage to PR
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        recreate: true
-        path: code-coverage-results.md
-    # VERSION
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0
-      with:
-        versionSpec: '5.x'
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v0
-    # OUTPUT
-    - id: output_version
-      run: echo "pkg_version=${{ env.GitVersion_NuGetVersionV2 }}" >> "$GITHUB_OUTPUT"
-    # CODE COVERAGE (HTML REPORT)
-    - name: Generate HTML report
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.1.26
-      with:
-        reports: '${{ github.workspace }}/src/coverage/coverage.cobertura.xml'
-        targetdir: '${{ github.workspace }}/src/coverage/report'
-        reporttypes: 'Html_Dark'
-        tag: '${{ env.GitVersion_NuGetVersionV2 }}'
-    - name: Upload coverage report artifact
-      uses: actions/upload-artifact@v2.2.3
-      if: github.event_name == 'pull_request'
-      with:
-        name: HTML Coverage Report
-        path: '${{ github.workspace }}/src/coverage/report'
+      # SETUP
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - name: Wrap Chrome
+        run: chmod +x ./build/wrap_chrome.sh && ./build/wrap_chrome.sh
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      # BUILD
+      - name: Restore dependencies
+        run: dotnet restore ./src/StageZero.sln
+      - name: Build
+        run: dotnet build ./src/StageZero.sln --no-restore
+      # TEST
+      - name: Get Chrome version
+        run: chmod +x ./build/get_chrome_version.sh && ./build/get_chrome_version.sh
+      # SETUP SELENIUM (GUARANTEES DRIVER / BROWSER PARITY)
+      - name: Setup Selenium
+        run: |
+          sudo rm -f /usr/bin/chromedriver && \
+          ./src/StageZero.Selenium/bin/Debug/netstandard2.1/selenium-manager/linux/selenium-manager \
+            --driver chromedriver \
+            --driver-version ${{ env.CHROME_VERSION }} \
+            --browser chrome \
+            --browser-path $(which chrome) \
+            --debug \
+            --trace
+      - name: Test
+        run: |
+          dotnet test ./src/StageZero.sln --no-restore \
+            /p:CollectCoverage=true \
+            /p:CoverletOutput="../coverage/" \
+            /p:MergeWith="../coverage/coverage.json" \
+            /p:CoverletOutputFormat=\"cobertura,json\" -m:1 \
+            --verbosity normal
+      # CODE COVERAGE
+      - name: Generate code coverage report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: /src/coverage/coverage.cobertura.xml
+          badge: true
+          format: markdown
+          output: both
+      - name: Add code coverage to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: code-coverage-results.md
+      # VERSION
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: "5.x"
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0
+      # OUTPUT
+      - id: output_version
+        run: echo "pkg_version=${{ env.GitVersion_NuGetVersionV2 }}" >> "$GITHUB_OUTPUT"
+      # CODE COVERAGE (HTML REPORT)
+      - name: Generate HTML report
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.2.5
+        with:
+          reports: "${{ github.workspace }}/src/coverage/coverage.cobertura.xml"
+          targetdir: "${{ github.workspace }}/src/coverage/report"
+          reporttypes: "Html_Dark"
+          tag: "${{ env.GitVersion_NuGetVersionV2 }}"
+      - name: Upload coverage report artifact
+        uses: actions/upload-artifact@v2.2.3
+        if: github.event_name == 'pull_request'
+        with:
+          name: HTML Coverage Report
+          path: "${{ github.workspace }}/src/coverage/report"
 
   publish:
     if: github.ref == 'refs/heads/main'
@@ -108,29 +108,28 @@ jobs:
       PKG_VERSION: ${{ needs.build.outputs.pkg_version }}
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Package
-      run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o ./publish
-    - name: Publish
-      run: dotnet nuget push ./publish/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-    - name: Tag
-      run: |
-        git tag ${{ env.PKG_VERSION }}
-        git push origin ${{ env.PKG_VERSION }}
-    - name: Zip contents
-      run: |
-        for file in ./publish/*.nupkg; do
-          mv -- "$file" "${file%.nupkg}.zip"
-        done
-    - name: Create release
-      uses: ncipollo/release-action@v1
-      with:
-        name: StageZero v${{ env.PKG_VERSION }}
-        tag: ${{ env.PKG_VERSION }}
-        artifacts: "./publish/*.zip"
-        generateReleaseNotes: true
-    
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Package
+        run: dotnet pack ./src/StageZero.sln -c Release /p:Version=${{ env.PKG_VERSION }} -o ./publish
+      - name: Publish
+        run: dotnet nuget push ./publish/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
+      - name: Tag
+        run: |
+          git tag ${{ env.PKG_VERSION }}
+          git push origin ${{ env.PKG_VERSION }}
+      - name: Zip contents
+        run: |
+          for file in ./publish/*.nupkg; do
+            mv -- "$file" "${file%.nupkg}.zip"
+          done
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          name: StageZero v${{ env.PKG_VERSION }}
+          tag: ${{ env.PKG_VERSION }}
+          artifacts: "./publish/*.zip"
+          generateReleaseNotes: true
