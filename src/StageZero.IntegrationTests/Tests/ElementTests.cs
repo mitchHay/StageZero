@@ -14,6 +14,18 @@ public class ElementTests : TestBase
         Assert.That(bodyElement, Is.Not.Null);
     }
 
+    [Test]
+    public async Task CanGetElements()
+    {
+        var liElements = await Driver.GetElements("#test-list li");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(liElements, Is.Not.Null);
+            Assert.That(liElements.Count, Is.EqualTo(2));
+        });
+    }
+
     [TestCase("Testing 123")]
     public async Task CanType(string textToType)
     {
@@ -99,5 +111,25 @@ public class ElementTests : TestBase
         var scrollToElement = await scrollToContainer.ScrollTo("#test-scroll-success");
 
         Assert.That(scrollToElement, Is.Not.Null);
+    }
+
+    [Test]
+    public async Task CanSelectOptionByText()
+    {
+        var selectElement = await Driver.GetElement("#test-select");
+        await selectElement.SelectOption("Value 1");
+
+        var selectValue = await selectElement.GetAttributeValue("value");
+        Assert.That(selectValue, Is.EqualTo("Value 1"));
+    }
+
+    [Test]
+    public async Task CanSelectOptionByIndex()
+    {
+        var selectElement = await Driver.GetElement("#test-select");
+        await selectElement.SelectOption(1);
+
+        var selectValue = await selectElement.GetAttributeValue("value");
+        Assert.That(selectValue, Is.EqualTo("Value 1"));
     }
 }

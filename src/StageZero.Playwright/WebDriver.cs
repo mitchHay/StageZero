@@ -1,6 +1,10 @@
 ﻿using Microsoft.Playwright;
+using StageZero.Playwright.Extensions;
 using StageZero.Web;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using static StageZero.Web.IDriverWeb;
 
@@ -130,6 +134,13 @@ public class WebDriver : IDriverWeb
     }
 
     /// <inheritdoc/>
+    public async Task<IEnumerable<IElementWeb>> GetElements(string cssSelector)
+    {
+        var locators = await _page.GetAllLocators(cssSelector);
+        return locators.Select(locator => new WebElement(locator, _page, cssSelector));
+    }
+
+    /// <inheritdoc/>
     public INavigate Navigate()
     {
         return new PlaywrightNavigate(_page);
@@ -158,11 +169,5 @@ public class WebDriver : IDriverWeb
     public IWindow Window()
     {
         return new Window(_page);
-    }
-    
-    /// <inheritdoc/>
-    public INavigateContext SwitchContext()
-    {
-        throw new NotImplementedException();
     }
 }

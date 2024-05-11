@@ -2,6 +2,7 @@
 using StageZero.Web;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StageZero.Playwright;
@@ -148,5 +149,20 @@ public class WebElement : IElementWeb
         await scrollToElement.ScrollIntoViewIfNeededAsync();
 
         return new WebElement(scrollToElement, _page, cssSelector);
+    }
+
+    /// <inheritdoc/>
+    public async Task SelectOption(string optionText)
+    {
+        await _locator.SelectOptionAsync(new string[] { optionText });
+    }
+
+    /// <inheritdoc/>
+    public async Task SelectOption(int optionIndex)
+    {
+        await _locator.SelectOptionAsync(new SelectOptionValue
+        {
+            Index = optionIndex
+        });
     }
 }

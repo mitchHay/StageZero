@@ -2,6 +2,8 @@
 using StageZero.Selenium.Browser;
 using StageZero.Selenium.Extensions;
 using StageZero.Web;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using static StageZero.Web.IDriverWeb;
 
@@ -64,6 +66,16 @@ public class WebDriver : IDriverWeb
         {
             var element = await _seleniumDriver.GetElement(cssSelector);
             return (IElementWeb)new WebElement(_seleniumDriver, element);
+        });
+    }
+
+    /// <inheritdoc/>
+    public Task<IEnumerable<IElementWeb>> GetElements(string cssSelector)
+    {
+        return Task.Run(async () =>
+        {
+            var elements = await _seleniumDriver.GetElements(cssSelector);
+            return (IEnumerable<IElementWeb>)elements.Select(element => new WebElement(_seleniumDriver, element));
         });
     }
 

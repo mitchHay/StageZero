@@ -60,4 +60,16 @@ public interface IElementWeb : IElement
     /// <param name="cssSelector">The element to scroll to</param>
     /// <returns>The targeted <see cref="IElementWeb"/> instance.</returns>
     public Task<IElementWeb> ScrollTo(string cssSelector);
+
+    /// <summary>
+    /// Clicks the dropdown and selects the specified <see cref="optionText"/>
+    /// </summary>
+    /// <param name="optionText">The option to select</param>
+    public Task SelectOption(string optionText);
+
+    /// <summary>
+    /// Clicks the dropdown and selects the specified <see cref="optionIndex"/>
+    /// </summary>
+    /// <param name="optionIndex">The option to select</param>
+    public Task SelectOption(int optionIndex);
 }

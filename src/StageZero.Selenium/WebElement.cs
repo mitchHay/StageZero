@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using StageZero.Selenium.Extensions;
 using StageZero.Web;
 using System;
@@ -163,5 +164,23 @@ public class WebElement : IElementWeb
             var converter = new SimpleReplacementStrategy();
             return converter.ConvertWordsToNumbers(key.ToString());
         }
+    }
+
+    public Task SelectOption(string optionText)
+    {
+        return Task.Run(() =>
+        {
+            var selectElement = new SelectElement(_element);
+            selectElement.SelectByText(optionText);
+        });
+    }
+
+    public Task SelectOption(int optionIndex)
+    {
+        return Task.Run(() =>
+        {
+            var selectElement = new SelectElement(_element);
+            selectElement.SelectByIndex(optionIndex);
+        });
     }
 }
