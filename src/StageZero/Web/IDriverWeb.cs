@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StageZero.Web;
@@ -20,6 +22,13 @@ public interface IDriverWeb : IDriver
     /// <param name="cssSelector">The css selector used to find the element</param>
     /// <returns>The targeted <see cref="IElementWeb"/> instance.</returns>
     Task<IElementWeb> GetElement(string cssSelector);
+
+    /// <summary>
+    /// Gets n amount of elements given the provided <see cref="cssSelector"/>
+    /// </summary>
+    /// <param name="cssSelector">The css selector used to find the elements</param>
+    /// <returns>An <see cref="IEnumerable"/> of <see cref="IElementWeb"/> instances.</returns>
+    Task<IEnumerable<IElementWeb>> GetElements(string cssSelector);
 
     /// <summary>
     /// Invoke a browser level navigation event
