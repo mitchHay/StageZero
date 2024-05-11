@@ -12,6 +12,20 @@ That's pretty neat, but can sometimes be tricky to test! `StageZero` aims to rem
 
 Here are some common element interaction use cases driven by `StageZero`.
 
+### Getting an element
+
+```csharp
+var element = await Driver.GetElement("#element");
+```
+
+#### Getting elements
+
+Similar to the above snippet, you are also able to get a collection of HTML elements using:
+
+```csharp
+var elements = await Driver.GetElements("#element");
+```
+
 ### Clicking an element
 
 ```csharp
@@ -47,6 +61,22 @@ var elementToHold = await Driver.GetElement("#hold-element");
 var timeToHold = TimeSpan.FromSeconds(1);
 
 await elementToHold.ClickAndHold(timeToHold);
+```
+
+### Selecting an option from a dropdown
+
+#### Selecting an option based on its text contents
+
+```csharp
+var selectElement = await Driver.GetElement("#select-element");
+await selectElement.SelectOption("Value 1");
+```
+
+#### Selecting an option based on its index
+
+```csharp
+var selectElement = await Driver.GetElement("#select-element");
+await selectElement.SelectOption(1);
 ```
 
 ### Scrolling to an element
