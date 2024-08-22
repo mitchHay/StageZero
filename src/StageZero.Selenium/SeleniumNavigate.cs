@@ -14,27 +14,27 @@ namespace StageZero.Selenium
         }
 
         /// <inheritdoc/>
-        public Task Back()
+        public async Task Back()
         {
-            return Task.Run(() => _driver.Navigate().Back());
+            await _driver.Navigate().BackAsync();
         }
 
         /// <inheritdoc/>
-        public Task Forward()
+        public async Task Forward()
         {
-            return Task.Run(() => _driver.Navigate().Forward());
+            await _driver.Navigate().ForwardAsync();
         }
 
         /// <inheritdoc/>
-        public Task ToUrl(string url)
+        public async Task ToUrl(string url)
         {
-            return Task.Run(() => _driver.Navigate().GoToUrl(url));
+            await _driver.Navigate().GoToUrlAsync(url);
         }
 
         /// <inheritdoc/>
-        public Task ToUrl(Uri uri)
+        public async Task ToUrl(Uri uri)
         {
-            return Task.Run(() => _driver.Navigate().GoToUrl(uri));
+            await _driver.Navigate().GoToUrlAsync(uri);
         }
     }
 }
