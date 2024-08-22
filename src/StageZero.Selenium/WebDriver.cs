@@ -86,9 +86,9 @@ public class WebDriver : IDriverWeb
     }
 
     /// <inheritdoc/>
-    public Task Refresh()
+    public async Task Refresh()
     {
-        return Task.Run(() => _seleniumDriver.Navigate().Refresh());
+        await _seleniumDriver.Navigate().RefreshAsync();
     }
 
     /// <inheritdoc/>
