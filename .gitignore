@@ -11,6 +11,9 @@
 *.sln.docstates
 *.User.json
 
+# IntelliJ editors
+.idea/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

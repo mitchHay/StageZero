@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StageZero.IntegrationTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StageZero.Playwright", "StageZero.Playwright\StageZero.Playwright.csproj", "{D0BB8A97-60E0-4E75-B9FC-7E82A0C5D9BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StageZero.Puppeteer", "StageZero.Puppeteer\StageZero.Puppeteer.csproj", "{9767F605-F018-48D9-8931-234536966EFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D0BB8A97-60E0-4E75-B9FC-7E82A0C5D9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0BB8A97-60E0-4E75-B9FC-7E82A0C5D9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0BB8A97-60E0-4E75-B9FC-7E82A0C5D9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9767F605-F018-48D9-8931-234536966EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9767F605-F018-48D9-8931-234536966EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9767F605-F018-48D9-8931-234536966EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9767F605-F018-48D9-8931-234536966EFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
