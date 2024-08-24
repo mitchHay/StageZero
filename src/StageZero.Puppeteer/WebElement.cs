@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using PuppeteerSharp;
 using PuppeteerSharp.Input;
 using StageZero.Web;
+using System.Linq;
+using StageZero.Puppeteer.Extensions;
 
 namespace StageZero.Puppeteer;
 
-public class WebElement(IElementHandle elementHandle) : IElementWeb
+public class WebElement(IElementHandle elementHandle, IPage page, string cssSelector) : IElementWeb
 {
     /// <inheritdoc />
     public string Text => elementHandle.GetPropertyAsync("innerText").GetAwaiter().GetResult()
@@ -28,9 +30,10 @@ public class WebElement(IElementHandle elementHandle) : IElementWeb
         .JsonValueAsync<string>().GetAwaiter().GetResult();
     
     /// <inheritdoc />
-    public Task PressKeys(Keys keys)
+    public async Task PressKeys(Keys keys)
     {
-        throw new NotImplementedException();
+        await page.Keyboard.SendKeyEvent(keys, KeyPress.Down);
+        await page.Keyboard.SendKeyEvent(keys, KeyPress.Up);
     }
     
     /// <inheritdoc />
@@ -63,9 +66,17 @@ public class WebElement(IElementHandle elementHandle) : IElementWeb
         elementHandle.EvaluateFunctionAsync<string>($"node => node.{attributeName}");
     
     /// <inheritdoc />
-    public Task<IElementWeb> ScrollTo(string cssSelector)
+    public async Task<IElementWeb> ScrollTo(string cssSelector)
     {
-        throw new NotImplementedException();
+        var scrollToElement = (await elementHandle.QuerySelectorAllAsync(cssSelector)).FirstOrDefault();
+        if (scrollToElement == null)
+        {
+            throw new Exception($"Failed to find any elements with the css selector {cssSelector}");
+        }
+
+        await scrollToElement.ScrollIntoViewAsync();
+
+        return new WebElement(scrollToElement, page, cssSelector);
     }
 
     /// <inheritdoc />
@@ -73,8 +84,13 @@ public class WebElement(IElementHandle elementHandle) : IElementWeb
 
     
     /// <inheritdoc />
-    public Task SelectOption(int optionIndex)
+    public async Task SelectOption(int optionIndex)
     {
-        throw new NotImplementedException();
+        // Find all options
+        var options = await elementHandle.QuerySelectorAllAsync($"{cssSelector} option");
+        var optionToSelect = options.ElementAt(optionIndex);
+        var optionText = await (await optionToSelect.GetPropertyAsync("value")).JsonValueAsync<string>();
+        
+        await elementHandle.SelectAsync(optionText);
     }
 }
