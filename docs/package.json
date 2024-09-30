@@ -15,6 +15,6 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "sass": "^1.79.3"
+    "sass": "^1.79.4"
   }
 }
