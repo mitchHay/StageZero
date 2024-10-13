@@ -2,7 +2,7 @@
 import Default from '@astrojs/starlight/components/Head.astro';
 import type { Props } from '@astrojs/starlight/props';
 
-const ogImage = `${Astro.url}images/og-image.png`; 
+const ogImage = `${Astro.site}images/og-image.png`; 
 ---
 
 <Default {...Astro.props}><slot /></Default>
