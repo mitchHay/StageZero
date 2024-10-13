@@ -1,5 +1,5 @@
-import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { defineConfig } from 'astro/config';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -36,6 +36,9 @@ export default defineConfig({
       customCss: [
 				'./src/styles/custom.scss',
 			],
+      components: {
+        Head: './src/components/head/Head.astro',
+      },
 		}),
 	],
 });
