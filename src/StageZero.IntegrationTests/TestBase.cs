@@ -6,8 +6,9 @@ namespace StageZero.IntegrationTests;
 [Parallelizable(ParallelScope.All)]
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 // Fixtures
-[TestFixture(typeof(Playwright.WebDriverBuilder))]
-[TestFixture(typeof(Selenium.WebDriverBuilder))]
+// [TestFixture(typeof(Playwright.WebDriverBuilder))]
+// [TestFixture(typeof(Selenium.WebDriverBuilder))]
+[TestFixture(typeof(Puppeteer.WebDriverBuilder))]
 public class TestBase
 {
     public IDriverWeb Driver { get; private set; }

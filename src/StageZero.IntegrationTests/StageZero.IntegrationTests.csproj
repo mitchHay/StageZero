@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StageZero.Playwright\StageZero.Playwright.csproj" />
     <ProjectReference Include="..\StageZero.Selenium\StageZero.Selenium.csproj" />
+    <ProjectReference Include="..\StageZero.Puppeteer\StageZero.Puppeteer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

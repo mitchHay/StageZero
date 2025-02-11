@@ -2,7 +2,6 @@
 using StageZero.Web;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StageZero.Playwright;
@@ -38,8 +37,8 @@ public class WebElement : IElementWeb
     {
         get
         {
-            _locator.IsDisabledAsync().Wait();
-            return _locator.IsDisabledAsync().Result;
+            _locator.IsVisibleAsync().Wait();
+            return _locator.IsVisibleAsync().Result;
         }
     }
 

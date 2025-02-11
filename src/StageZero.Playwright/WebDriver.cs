@@ -3,7 +3,6 @@ using StageZero.Playwright.Extensions;
 using StageZero.Web;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using static StageZero.Web.IDriverWeb;
@@ -20,14 +19,13 @@ public class WebDriver : IDriverWeb
     private IBrowserContext _browserContext;
     private IPage _page;
     private int _maxInitTries = 2;
-
-    private readonly object lockObj = new();
+    private readonly object _lockObj = new();
 
     public event HandleAlert OnAlert;
 
     public WebDriver(WebDriverOptions options)
     {
-        lock (lockObj)
+        lock (_lockObj)
         {
             Task.Run(async () =>
             {
