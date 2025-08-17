@@ -18,9 +18,9 @@ export default defineConfig({
         src: './src/assets/stagezero_logo.png'
       },
       defaultLocale: 'en',
-			social: {
-				github: 'https://github.com/mitchHay/StageZero',
-			},
+			social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/mitchHay/StageZero' },
+      ],
       editLink: {
         baseUrl: 'https://github.com/mitchHay/StageZero/edit/main/docs/',
       },
